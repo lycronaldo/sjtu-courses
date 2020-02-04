@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Lab3",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-o",
+                "ed",
+                "Editor.cc",
+                "ListBuffer.cc",
+                "ed.cc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run Lab3",
+            "type": "shell",
+            "command": "${workspaceRoot}/ed",
+            "args": [ ],
+            "dependsOn": "Build Lab3",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

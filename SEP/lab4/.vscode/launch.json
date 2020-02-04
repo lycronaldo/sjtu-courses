@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Lab4",
+            "type": "cppdbg",
+            "request": "launch",
+            // "targetArchitecture": "x64",
+            "program": "${workspaceRoot}/hanoi",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "externalConsole": true,
+            "linux": {
+                "MIMode": "gdb"
+            },
+            "osx": {
+                "MIMode": "lldb"
+            },
+            "windows": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "gdb.exe"
+            },
+            "preLaunchTask": "Build Lab4"
+        }
+    ]
+}
