@@ -60,6 +60,12 @@ public:
         return getch();
     }
 
+    static void GetLine()
+    {
+        string s;
+        getline(cin, s);
+    }
+
     static void Clear()
     {
         clrscr();

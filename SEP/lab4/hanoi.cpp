@@ -28,6 +28,21 @@ void write_hi()
         Termio::buffer[2][i] = '-';
     }
 }
+
+void hanoi(int n, Rod &a, Rod &b, Rod &c)
+{
+    if (n == 0)
+        return;
+    hanoi(n - 1, a, c, b);
+    c.PushDisk(a.PopDisk());
+
+    Termio::PutDisks(rods[0], rods[1], rods[2]);
+    Termio::Draw();
+    cout << "Auto Mode:" << (&a - rods) + 1 << "->" << (&c - rods) + 1 << endl;
+    Termio::GetLine();
+
+    hanoi(n - 1, b, a, c);
+}
 void AutoMove()
 {
     while (!userMovement.Empty())
@@ -38,8 +53,11 @@ void AutoMove()
         rods[src].PushDisk(rods[dst].PopDisk());
         Termio::PutDisks(rods[0], rods[1], rods[2]);
         Termio::Draw();
-        Termio::GetChar();
+        Termio::GetLine();
     }
+    hanoi(disks, rods[0], rods[1], rods[2]);
+    cout << "Auto solving completed." << endl;
+    exit(0);
 }
 void DispatchCmd(string &cmd)
 {
