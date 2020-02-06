@@ -33,7 +33,7 @@ void run_testcase(string testcasename)
         testcase >> y;
         testcase >> z;
         testcase >> w;
-        TreeNode *node = tree.find_nearest_node(x, y);
+        TreeNode *node = tree.findNearestNode(x, y);
 
         if (z == node->getX() && w == node->getY())
         {
@@ -42,6 +42,7 @@ void run_testcase(string testcasename)
         else
         {
             cout << "The " << i << " test case Wrong." << endl;
+            // assert(0);
         }
     }
 
