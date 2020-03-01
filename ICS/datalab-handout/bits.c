@@ -229,9 +229,9 @@ int isLessOrEqual(int x, int y)
 {
   int signx = (x >> 31) & 1;
   int signy = (y >> 31) & 1;
-  int k1 = ((signx ^ signy) ^ 1) & (((x + (~y) + 1) >> 31) & 1);
+  int k1 = (signx ^ signy ^ 1) & (((x + (~y)) >> 31) & 1);
   int k2 = (signx & (signy ^ 1));
-  return k1 | k2 | (!(x ^ y));
+  return k1 | k2;
 }
 //4
 /* 
