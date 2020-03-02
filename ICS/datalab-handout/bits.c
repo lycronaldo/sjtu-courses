@@ -296,18 +296,18 @@ unsigned floatScale2(unsigned uf)
   if (exp == 0x7f800000 || uf == 0)
     return uf | sign;
 
-  if (exp == 0)
+  if (exp == 0) // uf is a denormalize number
   {
-    if ((frac >> 22) == 1)
+    if ((frac >> 22) == 1) // 2*uf change into a normalized number
     {
       exp = (1 << 23);
       frac = (frac << 1) & 0x7fffff;
       return sign | exp | frac;
     }
-    else
+    else // 2*uf is still a denormalized number
       return sign | (frac << 1);
   }
-  else
+  else // uf is a normalized number, so 2*uf must be a normalized number, too
   {
     exp += (1 << 23);
     return sign | exp | frac;
@@ -335,17 +335,17 @@ int floatFloat2Int(unsigned uf)
 
   if (exp < 127) // uf < 1.0
     return 0;
-  if (exp >= 150) // uf >= 1.0
+  if (exp >= 150) // // we can keep all 23 frac
   {
     t = exp - 150;
-    if (t < 8) // round(uf) is in int's range
+    if (t < 8) // round(uf) is in int range, and we can put no more than 7 zeros after real
     {
       real = real << t;
       return (sign == 0) ? real : (-real);
     }
-    return 0x80000000;
+    return 0x80000000; // out of range, we can't put more than 7 zeros after real
   }
-  real = real >> (150 - exp);
+  real = real >> (150 - exp); // the last serval bits of frac should be thrown
   return (sign == 0) ? real : (-real);
 }
 /* 
