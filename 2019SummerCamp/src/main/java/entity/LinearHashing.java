@@ -4,8 +4,13 @@ import global.GlobalVar;
 
 public class LinearHashing implements Hashing {
     private static int CAPACITY = 8;
-    private Tuple[] tuples = null;
-    private int size = 0;
+    private Tuple[] tuples;
+
+    public Tuple[] getTuples() {
+        return tuples;
+    }
+
+    private int size;
 
     public LinearHashing() {
         this.tuples = new Tuple[CAPACITY];

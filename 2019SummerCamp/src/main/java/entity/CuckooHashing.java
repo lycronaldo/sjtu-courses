@@ -3,8 +3,16 @@ package entity;
 
 public class CuckooHashing implements Hashing {
     private static int CAPACITY = 8;
-    private Tuple[] table1 = null;
-    private Tuple[] table2 = null;
+    private Tuple[] table1;
+    private Tuple[] table2;
+
+    public Tuple[] getTable1() {
+        return table1;
+    }
+
+    public Tuple[] getTable2() {
+        return table2;
+    }
 
     public CuckooHashing() {
         table1 = new Tuple[CAPACITY];

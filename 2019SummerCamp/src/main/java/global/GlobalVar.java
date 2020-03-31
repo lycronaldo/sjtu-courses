@@ -2,6 +2,9 @@ package global;
 
 import org.junit.Test;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+
 public class GlobalVar {
 
     public static void log(Object... info) {
@@ -13,5 +16,15 @@ public class GlobalVar {
             System.out.print(info[i] + " ");
         }
         System.out.println();
+    }
+
+    /**
+     * Set JTable center alignment
+     * @param table
+     */
+    public static void setTableColumnCenter(JTable table) {
+        DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+        r.setHorizontalAlignment(JLabel.CENTER);
+        table.setDefaultRenderer(Object.class, r);
     }
 }

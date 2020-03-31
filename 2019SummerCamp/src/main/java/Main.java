@@ -4,6 +4,8 @@ import entity.CuckooHashing;
 import entity.Hashing;
 import entity.LinearHashing;
 import entity.Tuple;
+import gui.MainFrame;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,7 +13,18 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        new MainFrame();
+    }
+
+    /**
+     * And you should run these commands as below to check whether *.output is the same as *.ans
+     * > cd src/main/resources/
+     * > diff small.ans small.out
+     * > diff large.ans large.out
+     */
+    @Test
+    public void testCorrectness() throws Exception {
 //        Hashing hashing = new LinearHashing();
         Hashing hashing = new CuckooHashing();
         runTest("small.in", hashing);
