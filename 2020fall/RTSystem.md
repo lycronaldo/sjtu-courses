@@ -49,4 +49,4 @@
 ## Lecture-3 Online Scheduling of Aperiodic Tasks
 + 调度策略
   + 非抢占：先来先服务（FIFO）
-  + 抢占：DDL优先（DDL越早可抢占）、短作业优先SJF
+  + 抢占：最早截止时间优先 EDF、短作业优先 SJF
