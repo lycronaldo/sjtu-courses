@@ -1,18 +1,31 @@
 ## How to Write an Academic Paper
 
-Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing. However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know the skills of academic writing before we enter the master's career. 
+<center>Author: Jianbang Xian (120037910056)</center>
+<center>Email: sinkinben@sjtu.edu.cn</center>
 
-Here are some of my views on writing a computer science academic paper.
-
-### Get the Tools Ready
-
-
-
-### Write a Paper Proposal
+Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing. However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic skills of academic writing when we enter the master career. 
 
 
 
-### Write an Outline For Each Chapter
+## 1 Introduction
+
+## 2 Choose a Topic to Research
+
+
+
+## 3 Write the paper step by step
+
+
+
+### 3.1 Get the Tools Ready
+
+
+
+### 3.2 Write a Paper Proposal
+
+
+
+### 3,3 Write an Outline For Each Chapter
 
 Generally speaking, a standard academic paper consists of the following parts:
 
@@ -26,20 +39,21 @@ Generally speaking, a standard academic paper consists of the following parts:
 
 <img src="https://cs.fit.edu/~wds/guides/howto/img2.gif" style="zoom:87%;"/>
 
-### Fill in Each Chapter
+### 3.4 Fill in Each Chapter
 
 
 
-### Further Improvement
+### 3.5 Further Improvement
 
-Further improvements mainly include four parts:
+The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. The further improvements may include these parts: 
 
-1. Revise the paper
-2. Revise the documents of the software system
-3. Add comments as detailed as possible to the code
-4. Double check whether the experimental results are consistent with analysis in the paper
+​	(a) Revise the paper
+​	(b) Proofread the paper
+​	(c) Discuss with others
 
-No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our work. From my opinion, we should start revising the content at least a week before our paper is due. And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. What's more, we should be ready that we may need to write more than one draft or revise our paper several times.
+**Revise the Paper**
+
+No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible. Once your essay is drafted, make sure you’re handing in your best possible work by checking it over thoroughly and making any necessary edits. And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. 
 
 Read the paper and make changes to fix it and make impeccable. We can do it in a number of ways.
 
@@ -48,18 +62,23 @@ Read the paper and make changes to fix it and make impeccable. We can do it in a
 - Rewrite paragraphs and sentences to present your ideas better
 - Re-organize paragraphs and sentences to make your paper logical
 
-Once your essay is drafted, make sure you’re handing in your best possible work by checking it over thoroughly and making any necessary edits.
+Last but not least, a good paper needs to be polished carefully, we should be ready that we may need to write more than one draft or revise our paper several times. 
 
-+ 检查语法错误
-+ 润色论文的逻辑
-+ 完善软件/算法的文档，添加更多的注释，以便于他人复现
-+ 检查软件/算法的测试结果是否与论文所述吻合，学术不端是一个严重的问题
+**Proofread the Paper**
 
 
 
-### Summary
+**Discuss With Others**
 
-熟能生巧。
+
+
+
+
+
+
+## 4 Summary
+
+
 
 ### Notes
 
