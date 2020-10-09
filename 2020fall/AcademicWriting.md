@@ -9,6 +9,8 @@ Being able to write an academic paper is a critical skill for graduate students.
 
 ## 1 Introduction
 
+
+
 ## 2 Choose a Topic to Research
 
 
@@ -25,23 +27,27 @@ Being able to write an academic paper is a critical skill for graduate students.
 
 
 
-### 3,3 Write an Outline For Each Chapter
+### 3.3 Write an Outline For Each Chapter
 
-Generally speaking, a standard academic paper consists of the following parts:
+It's very important to creat an outline before writing the paper. An outline can help us organize our thoughts and ideas which we think are important. An outline is considered the skeleton of backbone of any paper. Outlining before writing the rough draft will help us identify which topics are important and which information is considered supporting ideas.
 
-1. **Abstract** - 
-2. Introduction
-3. Relative work
-4. Our contribution
-5. Experiment or evaluation
-6. Summary and Future Work
-7. Acknowledgment
+Generally speaking, a standard academic paper in computer scicence consists of the following parts.
+
+1. **Abstract.** An abstract is a short summary of the research paper, usually about a paragraph long (but it shouldn't be very long). It contains most of the following kinds of information in brief form. The body of your paper will develop and explain these ideas much more fully.
+2. **Introduction.** A good introduction should lead the readers from a generalized topic to a particular aspect. It helps to establish the main idea, context, research importance and summarizes background data on the topic, providing the main goal of the work. The introduction should include the thesis statement and any background information that we might have gathered. A thesis statement is the main topic and explains to the readers what ours views are on this topic.
+3. **Relative work.**
+4. **Our contribution.**
+5. **Experiment or evaluation.**
+6. **Summary and the future work.**
+7. **Acknowledgment.**
 
 <img src="https://cs.fit.edu/~wds/guides/howto/img2.gif" style="zoom:87%;"/>
 
+<center>Figure 3.1 An example of an outline</center>
+
 ### 3.4 Fill in Each Chapter
 
-
+After the outline is established, we can fill in the skeleton of the paper.
 
 ### 3.5 Further Improvement
 
@@ -53,7 +59,7 @@ The completion of the first draft does not mean that the paper is finished. We n
 
 **Revise the Paper**
 
-No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible. Once your essay is drafted, make sure you’re handing in your best possible work by checking it over thoroughly and making any necessary edits. And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. 
+No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible.  And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. Once the essay is drafted, make sure you’re handing in the best possible work by checking it over thoroughly and making any necessary edits.
 
 Read the paper and make changes to fix it and make impeccable. We can do it in a number of ways.
 
