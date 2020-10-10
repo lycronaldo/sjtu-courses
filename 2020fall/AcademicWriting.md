@@ -83,17 +83,11 @@ Generally speaking, a standard academic paper in Computer Science consists of th
 
 After the outline is established, we can fill in the skeleton of the paper. 
 
-The most important chapters are **contribution** and the **experiment or evaluation**. 
+The most important chapters are **our work/contribution** and the **experiment/evaluation** chapter. 
 
 ### 3.5 Further Improvement
 
-The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. The further improvements may include these parts: 
-
-+ Revise the paper
-+ Proofread the paper
-+ Discuss with others
-
-**Revise the Paper**
+The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. 
 
 No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible.  And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. Once the essay is drafted, make sure hand in the best possible work by checking it over thoroughly and making any necessary edits.
 
@@ -104,20 +98,19 @@ Read the paper and make changes to fix it and make impeccable. We can do it in a
 - Rewrite paragraphs and sentences to present our ideas better
 - Re-organize paragraphs and sentences to make our  paper logical
 
-Last but not least, a good paper needs to be polished carefully, we should be ready that we may need to write more than one draft or revise our paper several times. 
-
-**Proofread the Paper**
-
-
-
-**Discuss With Others**
-
-
-
-
-
-
+A good paper needs to be polished carefully, we should be ready that we may need to write more than one draft or revise our paper several times. 
 
 ## 4 Summary
 
-In this article, 我们对论文选题和如何一步一步写论文进行了讨论。
+Below is a quick list of the guidelines that have been discussed in this article.
+
++ Choose a topic to research.
++ Get the tools ready. 
++ Write the problem according to the problem.
++ Start writing early. Don't wait until the program is finished.
++ Write a proposal that includes a statement of the problem under study, the software requirements, an indication of how the problem will be solved, and a survey of related literature.
++ Write an outline for each chapter before we write the paper.
++ Write the first draft of the paper as soon as possible. Completion is more important than perfection.
++ Polish the first draft of the paper.
+
+Last but not least, **Do not plagiarize!**
