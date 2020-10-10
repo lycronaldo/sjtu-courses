@@ -30,9 +30,9 @@ As we know, a good research topic is half the success of the paper. From my pers
 
 **Read general background books and papers. ** Read articles, journals and papers on two or three topics related to our research. This will help us get an overview of the topic and see how our ideas relate to broader, narrower, and related issues. It also provides a great source for finding words commonly used to describe the topic.
 
-**Make a list of useful keywords. ** Take note of all keywords related to our research. Look for words that best describe our topic when reading related works/topics in encyclopedias, articles and other research works.
+**Make a list of useful keywords. **Take note of all keywords related to our research. Look for words that best describe our topic when reading related works/topics in encyclopedias, articles and other research works.
 
-Remember to follow instructions of our mentors. If the topic requires writing applications (software) or constructing a hardware make sure that choose an area we can afford to do or complete within the time limit.
+Don't forget to follow the instructions of our mentors. If the topic requires writing applications (software) or constructing a hardware make sure that choose an area we can afford to do or complete within the time limit.
 
 ## 3 Write the Paper Step by Step
 
@@ -81,7 +81,9 @@ Generally speaking, a standard academic paper in Computer Science consists of th
 
 ### 3.4 Fill in Each Chapter
 
-After the outline is established, we can fill in the skeleton of the paper.
+After the outline is established, we can fill in the skeleton of the paper. 
+
+The most important chapters are **contribution** and the **experiment or evaluation**. 
 
 ### 3.5 Further Improvement
 
@@ -118,4 +120,4 @@ Last but not least, a good paper needs to be polished carefully, we should be re
 
 ## 4 Summary
 
-
+In this article, 我们对论文选题和如何一步一步写论文进行了讨论。
