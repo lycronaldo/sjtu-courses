@@ -42,7 +42,7 @@ In this chapter, I will share some of my ideas about how to write a paper step b
 
 The first step in writing a paper is to get the tools ready.
 
-+ The document editor, such as Office-Word and $LaTeX$ .
++ The document editor, such as Office-Word and $L^AT_EX$. These tools can help us format our papers and check spelling and grammar.
 + Drawing software. Figures and tables (display items) are often the quickest way to communicate large amounts of complex information. A good drawing software is needed to make exquisite figures and tables.
 + Note management software. In the process of writing a thesis, it is inevitable to produce a lot of notes. A good note management can help us improve our efficiency.
 + Anything else that can help us write a paper.
