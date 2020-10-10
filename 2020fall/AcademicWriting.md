@@ -16,7 +16,7 @@ Even though we may have spent the majority of our time on writing code, a paper 
 Now let's take a look at how to write an academic paper. I will divide this article into the following parts:
 
 + **Introduction.** This section is the introduction, which introduces the main content of this article.
-+ **How to Write the Program** In this section, I will share some of my views on how to write the programs we need, or programs the paper need.
++ **How to Write the Program.** In this section, I will share some of my views on how to write the programs we need, or programs the paper need.
 + **Write the Paper Step by Step.** In this section, I'm going to share some ideas about how to an complete academic paper.
 + **Summary.** This section is the summary of this article.
 
