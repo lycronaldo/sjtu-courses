@@ -7,7 +7,7 @@ Being able to write an academic paper is a critical skill for graduate students.
 
 ## 1 Introduction
 
-This article is to introduce some of my views on academic writing in Computer Science. It should be noted that the scope of this article is very narrow and deals only with certain features of thesis that are unique to the field of Computer Science. 
+This article is to introduce some of my views on academic writing in Computer Science. 
 
 As we know, the premise of writing a great paper is to have a good idea. In the field of Computer Science, the core of the paper is the software system we built or the algorithm we implemented. Therefore, our ideas are all around software or algorithms. Once we have a new insight into a problem, we can solve it by programming, and then record the solution and experimental results, which will become a paper.
 
@@ -44,9 +44,11 @@ The first step in writing a paper is to get the tools ready.
 
 + The document editor, such as Office-Word and $L^AT_EX$. These tools can help us format our papers and check spelling and grammar.
 + Drawing software. Figures and tables (display items) are often the quickest way to communicate large amounts of complex information. A good drawing software is needed to make exquisite figures and tables.
-+ Note management software. In the process of writing a thesis, it is inevitable to produce a lot of notes. A good note management can help us improve our efficiency.
++ Note management software. In the process of writing a paper, it is inevitable to produce a lot of notes. A good note management can help us improve our efficiency.
 + Cloud backup service, e.g., OneDrive, Dropbox and Google Drive. We need to backup everything related to our paper.
 + Anything else that can help us write a paper.
+
+It should be noted that before writing the paper, we should have a specific plan for how to write a program the solve the problem we choose.
 
 ### 3.2 Write a Paper Proposal
 
@@ -55,7 +57,7 @@ Writing a good proposal is an important first step to success. Proposals will di
 + **The problem to be studied.** Give a statement in what research issues the study will address and in what ways.
 + **Previous work on the problem.** By clearly describing previous work, we can better describe the current limitations and the need for new methodology. It also gives us an opportunity to demonstrate knowledge of the area and helps others relate our current work to other scientific areas.
 + **Research methodology.** This section explains how we are going to conduct our research and the method we choose for our research question. Explain why the specific method is suitable for the research and how will it help us attain the research goals. The research methodology will give us an organized plan for the research.
-+ **The software requirements.** It should be noted that software (or algorithm) is the core of the paper. The software requirements define the boundaries of the problem. It can also prevent the thesis from going off the topic we research on.
++ **The software requirements.** It should be noted that software (or algorithm) is the core of the paper. The software requirements define the boundaries of the problem. It can also prevent the paper from going off the topic we research on.
 + **Significance of the Research.** The significance of the research will identify the importance of our work. It should be mainly stated in the introductory paragraph. We should highlight how the research is beneficial to the development of specific fields in Computer Science.
 + **A schedule for tasks**. It will remind us finish the task on time.
 
@@ -69,28 +71,43 @@ Generally speaking, a standard academic paper in Computer Science consists of th
 
 1. **Abstract.** An abstract is a short summary of the research paper, usually about a paragraph long (but it shouldn't be very long). It contains most of the following kinds of information in brief form. The body of the paper will develop and explain these ideas much more fully.
 2. **Introduction.** The introduction is the big picture of our work: what, why, and how. A good introduction should lead the readers from a generalized topic to a particular aspect. It helps to establish the main idea, context, research importance and summarizes background data on the topic, providing the main goal of the work. The introduction should include the thesis statement and any background information that we might have gathered. A thesis statement is the main topic and explains to the readers what ours views are on this topic.
-3. **Relative work.** This is an essential part of a essay, discussing related work is a good way to put our work in context with other similar work and to provide a way for us to compare and contrast our work to other work. It is not enough to just site related work, we need to explain to the readers in what way it is related to our work in the paper. 
-4. **Our work and contribution.** In this section we can describe the actual details of our thesis work. We should explain clearly what questions the paper are trying to answer, as well as how we decide to go about finding the answers, and we should describe in detail the solution and how it answers these questions.
+3. **Relative work.** This is an essential part of a paper, discussing related work is a good way to put our work in context with other similar work and to provide a way for us to compare and contrast our work to other work. It is not enough to just site related work, we need to explain to the readers in what way it is related to our work in the paper. 
+4. **Our work and contribution.** In this section we can describe the actual details of our work. We should explain clearly what questions the paper are trying to answer, as well as how we decide to go about finding the answers, and we should describe in detail the solution and how it answers these questions.
 5. **Experiment or evaluation.** This section should thoroughly describe the results we obtained. Whenever possible or appropriate, we should try to present the results pictorially using graphs or histograms. In addition we must explain the results and tell the reader what all these data mean.
 6. **Conclusion, summary and the future work.** In this chapter, we should conclude with the main ideas and results of our work. Discuss ways in which our project could be extended..., what's the next? what are the interesting problems and questions that resulted from the current work? These questions need to be considered carefully.
 7. **Acknowledgment.** A great work must be the crystallization of the wisdom of many people, don't forget to thank them at this section.
-8. **References.** At the end of the paper is a Reference section listing all the papers that we cited in the thesis.
-
-<img src="https://cs.fit.edu/~wds/guides/howto/img2.gif" style="zoom:87%;"/>
-
-<center>Figure 3.1 An example of an outline</center>
+8. **References.** At the end of the paper is a Reference section listing all the papers that we cited in the paper.
 
 ### 3.4 Fill in Each Chapter
 
-After the outline is established, we can fill in the skeleton of the paper. 
+After the outline is established, we can fill in the skeleton of the paper. An important principle is that we don't have to write the chapters in order. If we are short of ideas about a chapter, we can skip it over and finish the following chapters first. Another important principle we need to keep in mind is that completion is more important than perfection.
+
+For the abstract, introduction and related work, the writing of these chapters are relatively fixed. We can expand the details of each chapter according to the requirements of the outline.
 
 The most important chapters are the chapter about **our work and contribution** and the chapter about  **experiment or evaluation**. 
+
+We can express our work and contribution in the following aspects.
+
++ Details of the problem you are solving
++ Details of the program's architecture 
++ Details of the solution and the project's implementation
++ Details of the core algorithm(s) in the program
++ Discussion of how our solution solves the problem
+
+As for the chapter about experiment and evaluation, we can try to express in these ways.
+
++ Explain the tests we designed and performed (and why)
++ Explain how we gathered the data and describe the environment in which we gathered data (include description of any program we wrote or used to run your experiments)
++ Present the experiment results. Quality is more important than quantity. The reader will be tired of pages and pages of graphs and tables, instead they want to be convinced that the results show something interesting and that the experiments support the conclusions.
++ Discuss the results. Explain and interpret the results (possibly compare them to related work). This can help readers understand the significance of our work.
+
+It should be noted that: Don't include large pieces of source code in the paper. Even though we may have spent a long time writing code for the project, and even though we may be very proud of the simple and efficient code we wrote. The code may be appropriate to include a description of the implementation at a higher-level. Typically, a description like this would appear as a short paragraph in the Results or Implementation sections of the paper, but never copy and paste source code in the paper.
 
 ### 3.5 Iterative Revision
 
 The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. 
 
-No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible.  And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. Once the essay is drafted, make sure hand in the best possible work by checking it over thoroughly and making any necessary edits.
+No one can write a perfect first draft. It’s impossible - revising is critical if we want to impress the reviewers (or professors) and get a high grade for our paper. From my perspective, we should start revising the content as soon as possible.  And the revising doesn't mean revise only spelling mistakes and grammatical errors, we need to revise individual paragraphs like when we wrote them for the first time. Once the paper is drafted, make sure hand in the best possible work by checking it over thoroughly and making any necessary edits.
 
 Read the paper and make changes to fix it and make impeccable. We can do it in a number of ways.
 
