@@ -45,6 +45,7 @@ The first step in writing a paper is to get the tools ready.
 + The document editor, such as Office-Word and $L^AT_EX$. These tools can help us format our papers and check spelling and grammar.
 + Drawing software. Figures and tables (display items) are often the quickest way to communicate large amounts of complex information. A good drawing software is needed to make exquisite figures and tables.
 + Note management software. In the process of writing a thesis, it is inevitable to produce a lot of notes. A good note management can help us improve our efficiency.
++ Cloud backup service, e.g., OneDrive, Dropbox and Google Drive. We need to backup everything related to our paper.
 + Anything else that can help us write a paper.
 
 ### 3.2 Write a Paper Proposal
@@ -69,7 +70,7 @@ Generally speaking, a standard academic paper in Computer Science consists of th
 1. **Abstract.** An abstract is a short summary of the research paper, usually about a paragraph long (but it shouldn't be very long). It contains most of the following kinds of information in brief form. The body of the paper will develop and explain these ideas much more fully.
 2. **Introduction.** The introduction is the big picture of our work: what, why, and how. A good introduction should lead the readers from a generalized topic to a particular aspect. It helps to establish the main idea, context, research importance and summarizes background data on the topic, providing the main goal of the work. The introduction should include the thesis statement and any background information that we might have gathered. A thesis statement is the main topic and explains to the readers what ours views are on this topic.
 3. **Relative work.** This is an essential part of a essay, discussing related work is a good way to put our work in context with other similar work and to provide a way for us to compare and contrast our work to other work. It is not enough to just site related work, we need to explain to the readers in what way it is related to our work in the paper. 
-4. **Our contribution.** In this section we can describe the actual details of our thesis work. We should explain clearly what questions the paper are trying to answer, as well as how we decide to go about finding the answers, and we should describe in detail the solution and how it answers these questions.
+4. **Our work and contribution.** In this section we can describe the actual details of our thesis work. We should explain clearly what questions the paper are trying to answer, as well as how we decide to go about finding the answers, and we should describe in detail the solution and how it answers these questions.
 5. **Experiment or evaluation.** This section should thoroughly describe the results we obtained. Whenever possible or appropriate, we should try to present the results pictorially using graphs or histograms. In addition we must explain the results and tell the reader what all these data mean.
 6. **Conclusion, summary and the future work.** In this chapter, we should conclude with the main ideas and results of our work. Discuss ways in which our project could be extended..., what's the next? what are the interesting problems and questions that resulted from the current work? These questions need to be considered carefully.
 7. **Acknowledgment.** A great work must be the crystallization of the wisdom of many people, don't forget to thank them at this section.
@@ -83,9 +84,9 @@ Generally speaking, a standard academic paper in Computer Science consists of th
 
 After the outline is established, we can fill in the skeleton of the paper. 
 
-The most important chapters are **our work/contribution** and the **experiment/evaluation** chapter. 
+The most important chapters are the chapter about **our work and contribution** and the chapter about  **experiment or evaluation**. 
 
-### 3.5 Further Improvement
+### 3.5 Iterative Revision
 
 The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. 
 
@@ -106,8 +107,8 @@ Below is a quick list of the guidelines that have been discussed in this article
 
 + Choose a topic to research.
 + Get the tools ready. 
-+ Write the problem according to the problem.
-+ Start writing early. Don't wait until the program is finished.
++ Write the program according to the problem.
++ Start writing paper early. Don't wait until the program is finished.
 + Write a proposal that includes a statement of the problem under study, the software requirements, an indication of how the problem will be solved, and a survey of related literature.
 + Write an outline for each chapter before we write the paper.
 + Write the first draft of the paper as soon as possible. Completion is more important than perfection.
