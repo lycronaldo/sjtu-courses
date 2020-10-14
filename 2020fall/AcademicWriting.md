@@ -3,6 +3,8 @@
 <center>Author: Jianbang Xian (120037910056)</center>
 <center>Email: sinkinben@sjtu.edu.cn</center>
 
+## Abstract
+
 Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing. However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic skills of academic writing when we enter the master career. 
 
 ## 1 Introduction
@@ -132,3 +134,8 @@ Below is a quick list of the guidelines that have been discussed in this article
 + Polish the first draft of the paper.
 
 Last but not least, **Do not plagiarize!**
+
+
+
+## Reference
+
