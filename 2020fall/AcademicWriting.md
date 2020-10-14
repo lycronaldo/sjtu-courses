@@ -5,15 +5,15 @@
 
 ## Abstract
 
-Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing. However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic skills of academic writing when we enter the master career. 
+
 
 ## 1 Introduction
 
-This article is to introduce some of my views on academic writing in Computer Science. 
+Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing[<sup>[1]</sup>](#refer-anchor-1). However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic rules or skills of academic writing when we enter the master career.  In this article, I will introduce some of my views on academic writing.
 
-As we know, the premise of writing a great paper is to have a good idea. In the field of Computer Science, the core of the paper is the software system we built or the algorithm we implemented. Therefore, our ideas are all around software or algorithms. Once we have a new insight into a problem, we can solve it by programming, and then record the solution and experimental results, which will become a paper.
+As we know, the premise of writing a great paper is to have a good idea. In the field of Computer Science, the core of the paper is the software system we built or the algorithm we implemented. Therefore, our ideas are all around the software or algorithms. Once we have a new insight into a problem, we can solve it by programming, and then record the solution and experimental results, which will become a paper.
 
-Even though we may have spent the majority of our time on writing code, a paper does not contain a description of, nor does it contain a copy of,  the  project source code. A paper describes the research work in the context of other related work. In particular, it describes the problem we are solving, our solution, our experiments and results, our contribution to the general research area, related work in the area, and future directions for our work. 
+A paper describes the research work in the context of other related work. In particular, it describes the problem we are solving, our solution, our experiments and results, our contribution to the general research area, related work in the area, and future directions for our work. 
 
 Now let's take a look at how to write an academic paper. I will divide this article into the following parts:
 
@@ -96,6 +96,8 @@ We can express our work and contribution in the following aspects.
 + Details of the core algorithm(s) in the program
 + Discussion of how our solution solves the problem
 
+Even though we may have spent the majority of our time on writing code, a paper does not contain a copy of the source code. Instead, we can use pseudo code to describe our ideas.
+
 As for the chapter about experiment and evaluation, we can try to express in these ways.
 
 + Explain the tests we designed and performed (and why)
@@ -138,4 +140,9 @@ Last but not least, **Do not plagiarize!**
 
 
 ## Reference
+
+<span id="refer-anchor-1">[1] https://www.wikihow.com/Write-an-Academic-Essay</span> 
+
+<span id="refer-anchor-2">[2] </span>
+
 
