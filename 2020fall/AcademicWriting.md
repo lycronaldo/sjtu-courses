@@ -1,19 +1,21 @@
 ## How to Write an Academic Paper
 
-<center>Author: Jianbang Xian (120037910056)</center>
-<center>Email: sinkinben@sjtu.edu.cn</center>
+
+
+<center>Jianbang Xian (120037910056)</center>
+<center>sinkinben@sjtu.edu.cn</center>
 
 <center><h2>Abstract</h2></center>
 
-This article mainly discuss two questions, that are how to choose a research topic and how to write an academic paper. Choosing a good topic is half the success of the paper. Some of my views on topic selection about Software Engineering are given in this article. Then, this article divides the problem of how to write an academic paper into five steps: (1) get the tools ready, (2) write a paper proposal, (3) write an outline for each chapter, (4) fill in each chapter and (5) revise the paper iteratively. 
+This article mainly discusses two questions, that are how to choose a research topic and how to write an academic paper. Choosing a good topic is half the success of the paper. Some of my views on topic selection about Software Engineering are given in this article. Then, this article divides the problem of how to write an academic paper into five steps: (1) get the tools ready, (2) write a paper proposal, (3) write an outline for each chapter, (4) fill in each chapter and (5) revise the paper iteratively. 
 
 ## 1 Introduction
 
-Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career,  or any specific field that involves analytical writing[<sup>[1]</sup>](#refer-anchor-1). However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic rules or skills of academic writing when we enter the master career.  In this article, I will introduce some of my views on academic writing.
+Being able to write an academic paper is a critical skill for graduate students. It is also an important skill that continue to serve us if we intend to enter the PhD career, or any specific field that involves analytical writing[<sup>[1]</sup>](#refer-anchor-1). However, academic writing is no way an easy task as it consists of lengthy procedures of conducting thorough research and the ability to write skillfully. Therefore, we should know some basic rules or skills of academic writing when we enter the master career.  In this article, I will introduce some of my views on academic writing.
 
 As we know, the premise of writing a great paper is to have a good idea. In the field of Computer Science or Software Engineering, the core of the paper is the software system we built or the algorithm(s) we implemented. Therefore, our ideas are all around the software or algorithm(s). Once we have a new insight into a problem, we can solve it by programming, and then record the solution and experimental results, which will become a paper.
 
-The first thing we need to know is that, what is a paper? Olivia Valdes, a professor of Yale University, points out that, a paper describes the research work in the context of other related work. In particular, it describes the problem we are solving, our solution, our experiments and results, our contribution to the general research area, related work in the area, and future directions for our work[<sup>[2]</sup>](#refer-anchor-2). 
+The first thing we need to know is that, what is a paper? Olivia Valdes, a professor of Yale University, points out that, a paper describes the research work in the context of other related work. In particularly, it describes the problem we are solving, our solution, our experiments and results, our contribution to the general research area, related work in the area, and future directions for our work[<sup>[2]</sup>](#refer-anchor-2). 
 
 Now let's take a look at how to write an academic paper. I will divide this article into the following parts:
 
@@ -26,7 +28,7 @@ Now let's take a look at how to write an academic paper. I will divide this arti
 
 As we know, a good topic is half the success of the paper. From my perspective, here are some things we should do when choosing research topics in Software Engineering.
 
-**Look and think of ideas.** Search for ideas in paper or on websites related to the ideas generated. For example if we are thought about learning Artifical Intelligence, we could browse through sites discuss Deep Learning or Machine Learning. As we read through these sites, we will begin to form several topics based on these ideas we already have. When we have some little ideas, we can read some classic review papers in related fields. The review papers can help us understand the development status of the topic we choose, and also can help us generate some great ideas.
+**Look and think of ideas.** Search for ideas in paper or on websites related to the ideas generated. For example if we are thought about learning Artificial Intelligence, we could browse through sites discuss Deep Learning or Machine Learning. As we read through these sites, we will begin to form several topics based on these ideas we already have. When we have some little ideas, we can read some classic review papers in related fields. The review papers can help us understand the development status of the topic we choose, and also can help us generate some great ideas.
 
 **Avoid over used topics. ** Be aware of overused ideas when deciding a topic. Some topics has been written on some many times, we may wish to avoid such topics unless we have a unique approach to the topic.
 
@@ -80,7 +82,7 @@ Generally speaking, a standard academic paper in Software Engineering consists o
 3. **Relative work.** This is an essential part of a paper, discussing related work is a good way to put our work in context with other similar work and to provide a way for us to compare and contrast our work to other work. It is not enough to just site related work, we need to explain to the readers in what way it is related to our work in the paper. 
 4. **Our work and contribution.** In this section we can describe the actual details of our work. We should explain clearly what questions the paper are trying to answer, as well as how we decide to go about finding the answers, and we should describe in detail the solution and how it answers these questions.
 5. **Experiment or evaluation.** This section should thoroughly describe the results we obtained. Whenever possible or appropriate, we should try to present the results pictorially using graphs or histograms. In addition we must explain the results and tell the reader what all these data mean.
-6. **Conclusion, summary and the future work.** In this chapter, we should conclude with the main ideas and results of our work. Discuss ways in which our project could be extended..., what's the next? what are the left problemsf that resulted from the current work? These questions need to be considered carefully.
+6. **Conclusion, summary and the future work.** In this chapter, we should conclude with the main ideas and results of our work. Discuss ways in which our project could be extended..., what's the next? what are the left problems that resulted from the current work? These questions need to be considered carefully.
 7. **Acknowledgment.** A great work must be the crystallization of the wisdom of many people, don't forget to thank them at this section.
 8. **References.** At the end of the paper is a Reference section listing all the papers that we cited in the paper.
 
