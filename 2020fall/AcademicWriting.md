@@ -1,11 +1,11 @@
-## How to Write an Academic Paper in Software Engineering
+## How to Write an Academic Paper
 
 <center>Author: Jianbang Xian (120037910056)</center>
 <center>Email: sinkinben@sjtu.edu.cn</center>
 
-<center><font size=5><b>Abstract</b></font></center>
+<center><h2>Abstract</h2></center>
 
-*This article mainly discuss two questions, that are how to choose a research topic and how to write an academic paper. Choosing a good topic is half the success of the paper. Some of my views on topic selection about Software Engineering are given in this article. Then, this article divides the problem of how to write an academic paper into five steps: (1) get the tools ready, (2) write a paper proposal, (3) write an outline for each chapter, (4) fill in each chapter and (5) revise the paper iteratively.* 
+This article mainly discuss two questions, that are how to choose a research topic and how to write an academic paper. Choosing a good topic is half the success of the paper. Some of my views on topic selection about Software Engineering are given in this article. Then, this article divides the problem of how to write an academic paper into five steps: (1) get the tools ready, (2) write a paper proposal, (3) write an outline for each chapter, (4) fill in each chapter and (5) revise the paper iteratively. 
 
 ## 1 Introduction
 
