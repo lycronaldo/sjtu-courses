@@ -111,7 +111,7 @@ As for the chapter about experiment and evaluation, we can try to express in the
 
 It should be noted that including large pieces of source code in the paper is not permitted. Even though we may have spent a long time writing code for the project, and even though we may be very proud of the simple and efficient code we wrote. The code may be appropriate to include a description of the implementation at a higher-level by pseudo code. 
 
-### 3.5 Rivise the Paper Interatively 
+### 3.5 Revise the Paper Iteratively
 
 The completion of the first draft does not mean that the paper is finished. We need to make further revisions to the draft. 
 
