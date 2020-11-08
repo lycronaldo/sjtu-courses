@@ -174,3 +174,12 @@
 
   <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201108200816.png" style="width:80%;" />  
 
++ 最优性比较
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201108204348.png" alt="image-20201108204348326" style="width:80%;" />
+
++ RM schedulability tests
+  + Necessary: $U = \sum_{i=1}^{n}U_i \le 1$ .
+  + **Liu and Layland’s test for RM**：时间利用率满足 $U \le n\cdot(2^{\frac{1}{n}}-1)$ .
+  + **Hyperbolic bound test**: $\prod_{i=1}^{n}(U_i+1) \le 2$ .
+
