@@ -102,3 +102,75 @@
 + An online admission test for EDF
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201011190549.png" alt="image-20201011190548963" style="width:70%;" />
+
+## Lecture-5 Online scheduling of periodic tasks
+
++ 一些重要记号
+  + $\Delta$ : 时间线上的一个 slot，类似于小周期
+
++ **Agenda**
+  + Scheduling algorithms for periodic real-time systems
+  + RM schedulability tests (RM means Rate Monotonic, 速率不变的)
+
++ Periodic Tasks
+
+|                          Definition                          |                          Assumption                          |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108180213.png) | ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108180247.png) |
+
++ 周期性任务的调度策略
+  + Proportional share algorithm (等比例分配)
+  + Cyclic scheduling (循环调度，a.k.a. timeline scheduling, table-driven scheduling)
+  + Online scheduling policies
+    + Fixed-priority policy: DM (Deadline Monotonic), RM (Rate Monotonic)
+    + Dynamic policy: EDF
+
++ **Proportional Share Algorithm**
+
+  把时间线分为若干个 slot，每个 slot 的长度为**所有任务周期的最大公约数**，即 $slot=GCD(t_1, \dots, t_n)$。在每个 slot 内，任务 $t_i$ 占据的时间长度为：$slot \times \frac{C_i}{T_i}$ .
+
+  缺点：如果 slot 太小，容易造成巨大的 Context Switch开销。
+
+|                                                              |                                                              |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108180853.png) | ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108180914.png) |
+
++ Cyclic Scheduling
+
+  Examples: Air traffice control system, Space Shuttle, Boeing 777
+
+  |                           具体做法                           |                            优缺点                            |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201108195257.png" /> | ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108195412.png) |
+
++ Some Questions:
+  + **What defines an optimal scheduling policy (in the sense of feasibility)?**
+    ❌It can generate a feasible schedule even for infeasible task sets (seriously?!)
+    ❌It always generates a feasible schedule
+    ✅It generates a feasible schedule for a feasible task set
+  + **Which policy is optimal for preemptive task sets?**
+    ✅EDF
+  + **Which policy is optimal for non-preemptive task sets?**
+    ❌Non-preemptive EDF
+    ❌FIFO
+    ❌Non-preemptive fixed-priority
+    ✅None of these
+  
++ 固定优先级 Fixed-priority 之 RM 算法
+
+  周期越小，优先级越高，任务运行速率 $rate = \frac{1}{T}$ .
+
+  RM算法不是最优的（如下右图的例子）。但是，当 $\forall{i}, D_i = T_i$ 时，RM算法时所有**Fixed Priority**系列算法中的最优者。
+
+  |                             定义                             |                             例子                             |
+  | :----------------------------------------------------------: | :----------------------------------------------------------: |
+  | <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201108200703.png" /> | ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20201108201903.png) |
+
+  
+
++ DM算法
+
+  deadline越早，优先级越高。
+
+  <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20201108200816.png" style="width:80%;" />  
+
