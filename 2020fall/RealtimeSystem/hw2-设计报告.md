@@ -154,25 +154,93 @@ default:
 
 
 
-## 三、应用场景
+## 三、分区 WRR 调度的设计与实现
 
-为了对比与测试不同调度算法对 POK Kernel 性能的影响，设计包含 4 个分区的用户程序：
+本章节主要内容是在 POK Kernel中实现多分区的 WRR (Weight Round Robin) 调度。
+
+### 3.1 准备工作
+
+为了不影响内核其他部分的正常工作，我们把与分区 WRR 调度的代码通过条件编译隔离：
+
+```c
+#ifdef POK_NEEDS_PARTITIONS_SCHEDULER
+// do something here
+#endif
+```
+
+如果用户程序需要使用多分区 WRR 调度，那么需要在 `deployment.h` 中配置：
+
+```c
+#define POK_NEEDS_PARTITIONS_SCHEDULER 1
+#define POK_CONFIG_PARTITIONS_TYPE POK_SCHED_WRR
+#define POK_CONFIG_PARTITIONS_WEIGHT {2,3,4}
+```
+
+三者缺一不可，`POK_CONFIG_PARTITIONS_TYPE` 表示使用何种多分区调度策略，`POK_CONFIG_PARTITIONS_WEIGHT` 表示使用 WRR 调度分区时，用于指定各个分区的权重。
+
+为了实现的方便，在这里做了一点小小的改进，WRR 算法只会执行一遍，当执行完成后，会根据原来定义的 `POK_CONFIG_SCHEDULING_SLOTS_ALLOCATION` 序列依次执行（即 RR 算法）。
+
+例如，在上述权重分别为 `{2,3,4}` 的情况下，WRR 产生的序列为 `P3, P2, P3, P1, P2, P3, P1, P2, P3`，随后内核会切换为调度策略，依次根据序列 ``POK_CONFIG_SCHEDULING_SLOTS_ALLOCATION`` 执行。
+
+### 3.1 数据结构的修改
+
+修改 `partition.h` 中 `pok_partition_t` 添加属性 `weight`，表示：
+
+```c
+typedef struct
+{ 
+  // ...
+  // cw for supporting WRR thread schduler, should be 0 at initialization phase
+  int current_weight;    
+  // weight for WRR partition scheduler
+  uint8_t weight;
+} pok_partition_t;
+```
+
+在 `pok_partition_init()` 中初始化权重 `weight`:
+
+```c
+#ifdef POK_NEEDS_PARTITIONS_SCHEDULER
+      pok_partitions[i].weight = ((uint8_t[])POK_CONFIG_PARTITIONS_WEIGHT)[i];
+#endif
+```
+
+### 3.2 实现 WRR
+
+分区的调度是通过 `pok_elect_partition()` 函数完成的，因此需要在该函数中加入：
+
+```c
+#ifndef POK_NEEDS_PARTITIONS_SCHEDULER
+    pok_sched_current_slot = (pok_sched_current_slot + 1) % POK_CONFIG_SCHEDULING_NBSLOTS;
+    pok_sched_next_deadline = pok_sched_next_deadline + pok_sched_slots[pok_sched_current_slot];
+    next_partition = pok_sched_slots_allocation[pok_sched_current_slot];
+#else
+    next_partition = wrr_next_partition();
+    printf("executing partition = PR[%d]\n", next_partition + 1);
+#endif
+```
+
+`wrr_next_partition()` 即是在 `sched.c` 中实现的 WRR 分区调度算法（与线程的 WRR 调度类似，不在此赘述）。 
+
+## 四、应用场景
+
+为了对比与测试不同调度算法对 POK Kernel 性能的影响，设计包含 3 个分区的用户程序：
 
 + 分区 1：单生产者-消费者模型
 + 分区 2：多生产者-消费者模型
-+ 分区 3 和分区 4：为了测试多分区调度算法的有效性，均设置为单线程分区
++ 分区 3：为了测试多分区调度算法的有效性，设置为单线程分区
 
 本章节相关代码均位于 `pok/examples/mydemo` 文件夹下。
 
-### 3.1 生产者-消费者问题
+### 4.1 生产者-消费者问题
 
 生产者消费者问题（Producer-consumer Problem），也称有限缓冲问题（Bounded-buffer problem），是一个多进程同步问题的经典案例。该问题描述了共享缓冲区的两个线程——即所谓的“生产者”和“消费者”，在实际运行时会发生的问题。生产者的主要作用是生成一定量的数据放到缓冲区中，然后重复此过程。与此同时，消费者也在缓冲区消耗这些数据。该问题的关键就是要保证生产者不会在缓冲区满时加入数据，消费者也不会在缓冲区为空时消耗数据 [[1]](#ref1)。
 
 对于生产者和消费者，它们分别对应于分区中的一个线程。
 
-对于缓冲区，在这里采用了一个环形队列来实现（实质是通过数组模拟），将在下面的 3.2 节阐述实现细节。
+对于缓冲区，在这里采用了一个环形队列来实现（实质是通过数组模拟），将在下面的 4.2 节阐述实现细节。
 
-### 3.2 缓冲区
+### 4.2 缓冲区
 
 缓冲区是一个环形队列，其数据结构如下：
 
@@ -220,7 +288,7 @@ char buffer_get_item(buffer_t *buf)
 }
 ```
 
-### 3.3 分区1：单生产者-消费者
+### 4.3 分区1：单生产者-消费者
 
 分区 1 是一个单一的生产者-消费者模型，其具体场景如下：
 
@@ -325,7 +393,7 @@ void *consumer_job()
 
 
 
-### 3.4 分区2：多生产者-消费者
+### 4.4 分区2：多生产者-消费者
 
 分区 2 是多生产者-消费者模型，共有 4 个线程，其具体场景如下：
 
