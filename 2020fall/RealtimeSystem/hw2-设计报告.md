@@ -44,7 +44,7 @@ typedef struct
 } pok_thread_attr_t;
 ```
 
-然后，为了支持 Weight Round Robin 算法的实现，需要修改内核分区的数据结构 `pok_partition_t` ，新增成员变量 `current_weight` ，该成员变量表示该分区当前执行线程的权重：
+然后，为了支持 Weighted Round Robin 算法的实现，需要修改内核分区的数据结构 `pok_partition_t` ，新增成员变量 `current_weight` ，该成员变量表示该分区当前执行线程的权重：
 
 ```c
 typedef struct
@@ -144,23 +144,135 @@ default:
 
 ### 2.3 EDF
 
+所有的线程调度算法均在 `sched.c` 中实现。
 
+EDF 核心代码如下：
 
-### 2.4 Weight Round Robin
+```c
+uint32_t pok_sched_part_edf(const uint32_t index_low, const uint32_t index_high, 
+                            const uint32_t prev_thread, const uint32_t current_thread)
+{
+   uint32_t res;
+   uint32_t from;
+   uint64_t deadline = (~0);
+   if (current_thread == IDLE_THREAD) res = prev_thread;
+   else res = current_thread;
+   from = res;
+   uint8_t i = 0;
+   for (i = index_low; i <= index_high; i++)
+   {
+      if (pok_threads[i].state == POK_STATE_RUNNABLE &&
+          pok_threads[i].deadline < deadline &&
+          pok_threads[i].remaining_time_capacity > 0)
+      {
+         res = i;
+         deadline = pok_threads[i].deadline;
+      }
+   }
+   if ((res == from) && (pok_threads[res].state != POK_STATE_RUNNABLE))
+      res = IDLE_THREAD;
+   return res;
+}
 
+```
 
+### 2.4 Weighted Round Robin
+
+实现细节可参考<span>[[2]](#ref2)</span> .
+
+WRR 代码实现如下：
+
+```c
+uint32_t pok_sched_part_wrr(const uint32_t index_low, const uint32_t index_high, 
+                            const uint32_t prev_thread, const uint32_t current_thread)
+{
+   uint32_t res;
+   uint32_t from;
+   if (current_thread == IDLE_THREAD) res = prev_thread;
+   else res = current_thread;
+   from = res;
+   int weight_gcd = get_threads_weight_gcd(index_low, index_high);
+   int weight_max = get_threads_weight_max(index_low, index_high);
+   // const uint32_t n = index_high - index_low + 1;
+   uint32_t i = index_low - 1;
+   int cw = 0;
+   if (pok_partitions[pok_current_partition].prev_thread != IDLE_THREAD)
+      i = pok_partitions[pok_current_partition].prev_thread;
+   if (pok_partitions[pok_current_partition].current_weight != 0)
+      cw = pok_partitions[pok_current_partition].current_weight;
+   while (1)
+   {
+      i = i + 1;
+      if (i == index_high + 1) i = index_low;
+      if (i == index_low)
+      {
+         // 在每个分区的数据结构 pok_partition_t 中记录当前的 cw
+         pok_partitions[pok_current_partition].current_weight = cw = cw - weight_gcd;
+         if (cw <= 0)
+         {
+            pok_partitions[pok_current_partition].current_weight = cw = weight_max;
+            if (cw == 0)
+            {
+               res = IDLE_THREAD;
+               break;
+            }
+         }
+      }
+      if (pok_threads[i].weight >= cw)
+      {
+         res = i;
+         break;
+      }
+   }
+   if ((res == from) && (pok_threads[res].state != POK_STATE_RUNNABLE))
+      res = IDLE_THREAD;
+   return res;
+}
+
+```
 
 ### 2.5 Fixed Priority
+
+FP 调度算法如下：
+
+```c
+uint32_t pok_sched_part_priority(const uint32_t index_low, const uint32_t index_high, const uint32_t prev_thread, const uint32_t current_thread)
+{
+   const uint8_t max_priority = 0xff;
+
+   uint32_t res;
+   uint32_t from;
+   uint8_t priority = max_priority;
+   if (current_thread == IDLE_THREAD) res = prev_thread;
+   else res = current_thread;
+   from = res;
+   uint8_t i = 0;
+   for (i = index_low; i <= index_high; i++)
+   {
+      if (pok_threads[i].state == POK_STATE_RUNNABLE &&
+          pok_threads[i].priority < priority &&
+          pok_threads[i].remaining_time_capacity > 0)
+      {
+         res = i;
+         priority = pok_threads[i].priority;
+      }
+   }
+   if ((res == from) && (pok_threads[res].state != POK_STATE_RUNNABLE))
+      res = IDLE_THREAD;
+   return res;
+}
+
+```
 
 
 
 ## 三、分区 WRR 调度的设计与实现
 
-本章节主要内容是在 POK Kernel中实现多分区的 WRR (Weight Round Robin) 调度。
+本章节主要内容是在 POK Kernel中实现多分区的 WRR (Weighted Round Robin) 调度。
 
 ### 3.1 准备工作
 
-为了不影响内核其他部分的正常工作，我们把与分区 WRR 调度的代码通过条件编译隔离：
+为了不影响内核其他部分的正常工作，我们把与分区 WRR 调度的代码通过条件编译的方式隔离：
 
 ```c
 #ifdef POK_NEEDS_PARTITIONS_SCHEDULER
@@ -482,9 +594,15 @@ void *son_job()
 
 ## 五、总结
 
+本次实验基于 POK Kernel，主要完成以下工作：
 
++ 实现了单个分区内的三种线程调度算法：EDF，WRR，FP；
++ 实现多分区的 WRR 调度；
++ 设计并实现了 POK Kernel 的应用场景，一个包含 3 分区的多生产者-消费者模型；
++ 设计并实现了MLFQ算法。
 
 ## 参考文献
 
 + <span id="ref1">[1] [Producer–consumer problem](https://en.wikipedia.org/wiki/Producer–consumer_problem)</span>
++ <span id="ref2">[2] [Weighted Round-Robin Scheduling](http://kb.linuxvirtualserver.org/wiki/Weighted_Round-Robin_Scheduling)</span>
 

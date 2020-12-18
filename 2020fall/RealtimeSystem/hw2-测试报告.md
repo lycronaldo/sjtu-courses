@@ -7,8 +7,6 @@
 
 ## 二、分区调度算法
 
-### 2.1 WRR 正确性测试
-
 测试分区调度 WRR 算法的用户程序位于 `examples/test-part` 目录下。
 
 包含 3 个分区，每个分区只有 1 个线程。
@@ -43,7 +41,7 @@ WRR 调度结果为 `1 1 2 1 2 3 1 2 3` ，与 WRR 算法结果一致。
 
 ## 三、线程调度算法
 
-测试线程调度算法的用户程序位于 `examples/test-part` 目录下。
+测试线程调度算法的用户程序位于 `examples/test-thread` 目录下。
 
 用户程序 `test-thread` 具有三个分区，分别用于测试以下算法：
 
@@ -51,15 +49,13 @@ WRR 调度结果为 `1 1 2 1 2 3 1 2 3` ，与 WRR 算法结果一致。
 + 分区 2: FP Testing
 + 分区 3: WRR Testing
 
-### 3.1 正确性测试
-
-首先，需要在 `examples/test-sched/kernel/deployment.h` 中指定各个分区的线程调度策略，声明如下宏定义：
+首先，需要在 `examples/test-thread/kernel/deployment.h` 中指定各个分区的线程调度策略，声明如下宏定义：
 
 ```c
 #define POK_CONFIG_PARTITIONS_SCHEDULER {POK_SCHED_EDF, POK_SCHED_PRIORITY, POK_SCHED_WRR}
 ```
 
-#### 3.1.1 EDF
+### 3.1 EDF
 
 EDF 是根据线程属性的 `deadline` 来决定下一个执行的线程的，因此需要设置不同的 `deadline` ，观察输出，判断 EDF 是否执行正确的调度序列。
 
@@ -101,7 +97,7 @@ void *t1()
 
 正确的输出应当为：`T2, T3, T1` 的重复序列。
 
-#### 3.1.2 FP
+### 3.2 FP
 
 FP (Fixed-Priority) 是根据线程属性的 `priority` 来决定下一个执行的线程的，因此需要设置不同的 `priority` ，观察输出，判断 FP 是否执行正确的调度序列。
 
@@ -126,11 +122,11 @@ int main()
 }
 ```
 
-线程内容与 2.1.1 小节相同，只输出 `Ti` 格式的字符串。
+线程内容与 3.1.1 小节相同，只输出 `Ti` 格式的字符串。
 
 此处，FP 的正确调度序列应当为 `T1 T3 T2` 的重复序列。 
 
-#### 3.1.3 WRR
+### 3.3 WRR
 
 WRR (Weight-Round-Robin) 要求给线程设置不同的 `weight`，具体实现可参考文章：http://kb.linuxvirtualserver.org/wiki/Weighted_Round-Robin_Scheduling .
 
@@ -155,14 +151,22 @@ int main()
 }
 ```
 
+T1, T2, T3 三个线程分别会输出 `A, B, C` 的字符。
+
 WRR 在此处的正确调度序列应当为 `AABABCABC`。
 
-#### 3.1.4 测试结果
+### 3.4 测试结果
+
+测试数据如下：
+
++ EDF Deadline 设置：T1=100，T2=20，T3=60
++ FP Priority 设置：T1=41，T2=43，T3=42
++ WRR Weight 设置：T1(A) = 4，T2(B) = 3，T3(C) = 2
 
 运行测试：
 
 ```c
-cd $POK_PATH/examples/test-sched/
+cd $POK_PATH/examples/test-thread/
 make clean; make all; make run
 ```
 
@@ -170,17 +174,29 @@ make clean; make all; make run
 
 <img src = "./test-thread.png" style="width: 80%" />
 
-### 3.2 对比分析
-
-|  1   | 2    | 3    |
-| :--: | ---- | ---- |
-|      |      |      |
-|      |      |      |
-|      |      |      |
-
 ## 四、应用场景测试
 
+为了对比与测试不同调度算法对 POK Kernel 性能的影响，设计包含 3 个分区的用户程序：
 
++ 分区 1：单生产者-消费者模型
++ 分区 2：多生产者-消费者模型
++ 分区 3：为了测试多分区调度算法的有效性，设置为单线程分区
 
+具体实现细节可参考设计报告。
+
+相关代码均位于 `pok/examples/mydemo` 文件夹下。
+
+对于分区 1 和 2 的生产者和消费者模型，均设置了一个参数 N ，表示生产者-消费者这些线程的操作次数（即在 buffer 中生产和消费 N 个资源）。
+
+下表为 N 取不同的值时，用户程序 `mydemo` 在不同的线程调度算法下的平均执行时间。
+
+|      |  EDF   |   FP   |  WRR   |
+| :--: | :----: | :----: | :----: |
+| N=10 | 156723 | 147504 | 175161 |
+| N=15 | 304227 | 285789 | 276570 |
+| N=20 | 341103 | 359541 | 368760 |
+| N=25 | 442512 | 424074 | 433293 |
+| N=30 | 543921 | 553140 | 525483 |
+| N=35 | 737520 | 745330 | 626892 |
 
 
