@@ -112,9 +112,6 @@ case POK_SCHED_PRIORITY:
 case POK_SCHED_MLFQ:
     pok_partitions[pid].sched_func = &pok_sched_part_mlfq;
     break;
-/*
- * Default scheduling algorithm is Round Robin.
- */
 default:
     pok_partitions[pid].sched_func = &pok_sched_part_rr;
     break;
@@ -142,9 +139,15 @@ default:
 #define POK_CONFIG_PARTITIONS_SCHEDULER {POK_SCHED_XXX, ...}
 ```
 
-### 2.3 EDF
+### 2.3 调度算法的实现
+
+在原本的开源 Pok Kernel 代码中，仅实现了静态 Round Robin 调度算法的实现，为了使得 Pok Kernel 能够对不同的实时任务能够尽可能的在 deadline 前完成执行，我们增加了三种调度算法的实现。这样，用户可以针对要处理的任务的特征来任意选择线程间和分区间合适的调度算法来调度任务。
+
+#### 2.3.1 EDF
 
 所有的线程调度算法均在 `sched.c` 中实现。
+
+在 EDF 算法中，在每一个新的就绪状态，调度器都是从那些已就绪但还没有完全处理完毕的任务中选择最早截止时间的任务，并将执行该任务所需的资源分配给它。在有新任务到来时，调度器必须立即计算 EDF，排出新的定序，即正在运行的任务被剥夺，并且按照新任务的截止时间决定是否调度该新任务。如果新任务的最后期限早于被中断的当前任务，就立即处理新任务。按照 EDF 算法，被中断任务的处理将在稍后继续进行。 
 
 EDF 核心代码如下：
 
@@ -176,9 +179,36 @@ uint32_t pok_sched_part_edf(const uint32_t index_low, const uint32_t index_high,
 
 ```
 
-### 2.4 Weighted Round Robin
+#### 2.3.2 Weighted Round Robin
 
 实现细节可参考<span>[[2]](#ref2)</span> .
+
+WRR 算法的伪代码描述如下：
+
+```c
+while (true) {
+    i = (i + 1) mod n;
+    if (i == 0) {
+        cw = cw - gcd(S); 
+        if (cw <= 0) {
+            cw = max(S);
+            if (cw == 0)
+            return NULL;
+        }
+    } 
+    if (W(Si) >= cw) 
+        return Si;
+}
+```
+
+其中：
+
++ 任务集合为 $S = {S_0, S_1, \dots, S_{n-1}}$，$W(S_i)$ 表示 $Si$ 的权值；
++ 变量 $i$ 表示上一次选择的任务；
++ 变量 $cw$ 表示当前调度的权值；
++ $max(S)$ 表示集合 $S$ 中所有任务的最大权值；
++ $gcd(S)$ 表示集合 $S$ 中所有任务权值的最大公约数；
++ 变量 $i$ 初始化为 -1，$cw$ 初始化为 0 。
 
 WRR 代码实现如下：
 
@@ -193,7 +223,6 @@ uint32_t pok_sched_part_wrr(const uint32_t index_low, const uint32_t index_high,
    from = res;
    int weight_gcd = get_threads_weight_gcd(index_low, index_high);
    int weight_max = get_threads_weight_max(index_low, index_high);
-   // const uint32_t n = index_high - index_low + 1;
    uint32_t i = index_low - 1;
    int cw = 0;
    if (pok_partitions[pok_current_partition].prev_thread != IDLE_THREAD)
@@ -231,7 +260,9 @@ uint32_t pok_sched_part_wrr(const uint32_t index_low, const uint32_t index_high,
 
 ```
 
-### 2.5 Fixed Priority
+#### 2.3.3 Fixed Priority
+
+固定优先级 (Fixed Priority) 调度算法的特点是把处理器分配给优先权最高的进程，但在执行期间，会不停的遍历线程或分区，只要出现另一个优先权更高的进程，则进程调度程序就立即停止当前进程的执行，并将处理器分配给新到的优先权最高的进程。
 
 FP 调度算法如下：
 
@@ -586,11 +617,11 @@ void *son_job()
 
 
 
-## 四、MLFQ算法
+## 五、MLFQ算法
 
-### 4.1 MLFQ 算法简述
+### 5.1 MLFQ 算法简述
 
-#### 4.1.1 Background
+#### 5.1.1 Background
 
 存在 2 个因素之间的 tradeoff :
 
@@ -601,7 +632,7 @@ void *son_job()
 
 MLFQ 能够根据历史数据，使用某种启发式算法，来做预测。
 
-#### 4.1.2 Design
+#### 5.1.2 Design
 
 多个队列，每个队列有一个优先级。
 
@@ -623,9 +654,9 @@ MLFQ 能够根据历史数据，使用某种启发式算法，来做预测。
 - 短任务会留在较高优先级，长任务的优先级会逐渐下降，从而达到接近SJF的调度效果
 - 交互型的任务会在使用完时间片前就让出CPU，使其一直处于最高的优先级，从而达到IO密集型的任务能被优先处理的调度效果
 
-#### 4.1.3 Optimization
+#### 5.1.3 Optimization
 
-以下基本的 MLFQ 存在的问题：
+以下是基本的 MLFQ 存在的问题：
 
 - 饿死问题：如果太多交互型的任务存在，就会导致低优先级的任务不被调度而饿死。
 - Gaming：恶意用户可以在时间片用完前通过触发IO来让出CPU，从而获得大多数的CPU时间。
@@ -636,24 +667,24 @@ MLFQ 能够根据历史数据，使用某种启发式算法，来做预测。
 - The Priority Boost：经过某个周期S，将所有任务放到最上面的队列中（S需要合适的设置）
 - Better Accounting：一个任务间断的执行时间超过1个时间片，就降低其优先级
 
-#### 4.1.4 Variants
+#### 5.1.4 Variants
 
 1. 不同队列具有不同的时间片长度，使得高优先级的交互型任务尽可能多的被切换，低优先级的CPU密集型任务尽可能少的被切换。
 2. Solaris MLFQ implementation：可以让系统管理员配置各个调度器参数。
 3. 根据数学公式调整任务的优先级
 
 
-### 4.2 MLFQ算法实现
+### 5.2 MLFQ算法实现
 
-#### 4.2.1 任务调度决策
+#### 5.2.1 任务调度决策
 
-每个时间片选择最高优先级队列中的队首任务进行执行
+每个时间片选择最高优先级队列中的队首任务进行执行。
 
-#### 4.2.2 Priority boost
+#### 5.2.2 Priority boost
 
 每隔一段时间进行一些priority boost，将所有队列中的任务移至最高优先级的队列当中，并重置所有任务的剩余时间配额。
 
-#### 4.2.3 每个时间片的状态设置和检查
+#### 5.2.3 每个时间片的状态设置和检查
 
 当前时间片执行任务的剩余执行时间和剩余时间配额需要自减1
 
@@ -662,16 +693,16 @@ MLFQ 能够根据历史数据，使用某种启发式算法，来做预测。
 - 检查是否有任务需要执行IO（在本系统实现中，每个任务的IO频率固定），若需要，则将其从队列中删除，并记录IO结束时间
 - 检查是否有任务的时间配额为0，若是，则将其移到更低优先级的队列当中，并将时间配额重置。若该任务已在最低优先级的队列当中，则只重置时间配额
 
-#### 4.2.4 对Gaming Attack的防止措施
+#### 5.2.4 对Gaming Attack的防止措施
 
 维护每个任务的剩余时间配额，在任务完成IO后不重置其时间配额，而是继续根据执行时间减少。
 
-### 4.3 代码实现
+### 5.3 代码实现
 
 参考文件 `mlfq/mlfq.py` ，可通过 `python3 mlfq.py` 直接运行并测试内置的测试用例 。
 
 
-## 五、总结
+## 六、总结
 
 本次实验基于 POK Kernel，主要完成以下工作：
 
