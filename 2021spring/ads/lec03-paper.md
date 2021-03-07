@@ -5,7 +5,11 @@
 
 **Question**
 
-> Suppose an application client at data center $D1$ writes object x with version 2 ($x_2$) and then object y with version 3 ($y_3$). Suppose $y_3$ has propagated from data center $D1$ to data center $D2$ but $x_2$ has not yet arrived at $D2$. Suppose another application client data center $D2$ has just read $y_3$, is it possible that it might read $x_1$ next? (If not, why not?) Will the client be blocked waiting for $x_2$ to arrive from $D1$? (If not, why not?)
+> Suppose an application client at data center $D1$ writes object $x$ with version 2 ($x_2$) and then object y with version 3 ($y_3$). Suppose $y_3$ has propagated from data center $D1$ to data center $D2$ but $x_2$ has not yet arrived at $D2$. Suppose another application client data center $D2$ has just read $y_3$, is it possible that it might read $x_1$ next? (If not, why not?) Will the client be blocked waiting for $x_2$ to arrive from $D1$? (If not, why not?)
+
+**My Answer**
+
+
 
 ## Abstract
 
@@ -52,7 +56,7 @@ ALPS 的 5 个 desirable properties:
 
 在这 5 个期望属性中，必须要有 Trade-off 。
 
-
+其中，ALP  属性可以实现 Always-Online 的特性。
 
 ## 3. Causal+ Consistency
 
