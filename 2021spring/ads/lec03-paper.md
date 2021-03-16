@@ -7,9 +7,16 @@
 
 > Suppose an application client at data center $D1$ writes object $x$ with version 2 ($x_2$) and then object y with version 3 ($y_3$). Suppose $y_3$ has propagated from data center $D1$ to data center $D2$ but $x_2$ has not yet arrived at $D2$. Suppose another application client data center $D2$ has just read $y_3$, is it possible that it might read $x_1$ next? (If not, why not?) Will the client be blocked waiting for $x_2$ to arrive from $D1$? (If not, why not?)
 
-**My Answer**
+The scenario can be described as:
 
+```
+D1:  write(x, x2) -> write(y, y3)
+                        |
+                        V
+D2:                  read(y) = y3 -> read(x) = ?
+```
 
+According to Casual Consistency, operation `read(x)` over $D2$ should be $x_2$ .
 
 ## Abstract
 
