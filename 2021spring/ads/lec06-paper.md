@@ -49,7 +49,7 @@
 
 This paper describes Sinfonia, a new paradigm to build scalable distributed systems, in which just need to manipulate data structures instead of handling with message-passing protocols. Sinfonia presents two key components, a memory-centric system architecture (designed to replace messaging-passing protocols) and the 'mini-transaction' operation which provides ACID properties to replicated data.
 
-Based on Sinfonia, this paper designed two applications, a cluster file system (FS) and a group communication service (CS), which shows the advantages of Sinfonia compared with the traditional paradigm.
+Based on Sinfonia, this paper designed two applications, a cluster file system (FS) and a group communication service (GCS), which shows the advantages of Sinfonia compared with the traditional paradigm.
 
 The major result of their implementation is the reduction in effort and code size necessary to implement user services compared  to their traditional counterparts.
 

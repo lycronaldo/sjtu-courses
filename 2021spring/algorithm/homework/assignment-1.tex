@@ -1,0 +1,496 @@
+\documentclass{article}
+\usepackage{times}
+\usepackage{a4wide}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{stmaryrd}
+\usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{graphics}
+\usepackage{epsfig}
+% \usepackage{ramacros}
+
+% ----------
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    frame=lrtb,
+    basicstyle=\ttfamily,
+}
+
+% ----------
+
+
+\addtolength{\textwidth}{20mm}
+\addtolength{\oddsidemargin}{-10mm}
+\addtolength{\textheight}{-5mm}
+\addtolength{\topmargin}{-9mm}
+
+\newcounter{exercise}
+\setcounter{exercise}{0}
+\newcommand{\exercise}{
+        \addtocounter{exercise}{1}
+        \vspace{0.2in}
+        \noindent
+        {\bf \theexercise .}
+        }
+
+\newcommand{\REMARK}[1]{}
+
+
+\newcommand{\NEWPART}{\vspace{.1in}
+              \noindent}
+
+\newcommand{\<}{
+    \langle}
+
+\renewcommand{\>}{
+    \rangle}
+
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\pagestyle{plain} \pagenumbering{arabic}
+
+\title{{\bf Assignment 1 - Submission}}
+\author{Jianbang Xian - 120037910056}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+{\large
+
+
+
+
+
+\begin{exercise}
+Prove the K\"onig theorem: Let $G$ be bipartite, then cardinality of maximum matching = cardinality of minimum vertex cover.
+\end{exercise}
+% 证明二分图的最大匹配数等于最小点覆盖数
+
+\bigskip
+\noindent \textbf{Solution}
+
+Let $mcard$ denote the cardinality of maximum matching, and $vcard$ denote the cardinality of minimum vertex cover.
+
+\bigskip
+\textbf{1. Proof that } $vcard \ge mcard$ .
+
+Suppose $mcard = k$, and then there exists $k$ non-adjacent edges in $G$. To cover these edges, we need $k$ different vertices at least, which means $vcard \ge mcard$.
+
+\bigskip
+\textbf{2. Proof that } $mcard \ge vcard$ .
+
+Suppose $vcard = k$, and $S = \{v_1, v_2, \dots, v_k\}$ is the minimum vertex cover set. According to its definition, there exists $m (m \ge k)$ edges $E = \{e_1, \dots, e_m\}$, where $e_j$ is start with $v_i$ . 
+
+Construct set $S' = \{ v'_{1}, \dots, v'_{k}\}$, where $e_j$ is end with $v'_{i}$ . Obviously, $e_j$ is the edge between $v_i$ and $v'_{i}$ , and $S \cap S'$ is a empty set. 
+
+Construct graph $M = <S \cup S', E>$, it is obviously one of the matchings of $G$, whose cardinality is $k$. Therefore, $mcard \ge k$, that is $mcard \ge vcard$.
+
+\bigskip
+In summary, $mcard = vcard$, that means cardinality of maximum matching = cardinality of minimum vertex cover.
+
+
+
+\begin{exercise}
+Consider the algorithm \textbf{Negative-Dijkstra} for computing shortest paths through graphs with negative edge weights (but without negative cycles). 
+\begin{algorithm}[htb]
+\caption{Negative-Dijkstra(G,s)}
+\begin{algorithmic}[1]
+\State $w^*\leftarrow$ minimum edge weight in $G$;
+\For{$e\in E(G)$}
+\State $w'(e)\leftarrow w(e)-w^*$
+\EndFor
+\State $T\leftarrow$\textbf{Dijkstra}$(G',s)$; \\
+\Return weights of $T$ in the original $G$;
+\end{algorithmic}
+\end{algorithm}
+
+Note that \textbf{Negative-Dijkstra} shifts all edge weights to be non-negative
+(by shifting all edge weights by the smallest original value) and runs in $O(m+\log n)$ time.
+
+Prove or Disprove: \textbf{Negative-Dijkstra} computes single-source shortest paths correctly in graphs with negative edge weights. To prove the algorithm correct, show that for all $u\in V$ the shortest $s-u$ path in the original graph is in $T$. To disprove, exhibit a graph with negative edges, with no negative cycles where \textbf{Negative-Dijkstra} outputs the wrong "shortest" paths, and explain why the algorithm fails.
+\end{exercise}
+
+\bigskip
+\noindent \textbf{Solution}
+
+This algorithm is wrong. Assume that directed graph $G=<V, E>$, $V = \{A,B,C\}$, and $E = \{ e_{AB} = 8, e_{AC} = 5, e_{BC} = -10 \}$.
+
+\begin{lstlisting}
+  A -----------------+                   A -----------------+    
+  |                  |                   |                  |
+ (8)                (5)       ==>       (18)               (15)
+  |                  |                   |                  |
+  V                  V                   V                  V
+  B ---- (-10) ----> C                   B ----- (0) -----> C
+     Figure-1. G                               Figure-2. G'
+\end{lstlisting}
+
+According to \textbf{Negative-Dijkstra} algorithm, digraph $G$ should be transformed into $G'$ in Figure-2.
+If we execute \textbf{Dijkstra}($G'$, A), it will output 2 shortest paths:
+
+1. $(A, B)$: $A \rightarrow B$, whose length is 18.
+
+2. $(A, C)$: $A \rightarrow C$, whose length is 15.
+
+However, in the original graph $G$, the shortest path of $(A, C)$ is $A \rightarrow B \rightarrow C$ (whose length is -2), not $A \rightarrow C$.
+
+The reason why it does not work is that, the \textbf{Dijkstra} algorithm assumes that the length of the path is always increasing. Once a vertex is marked as "finished", the algorithm found the shortest path to it, and it will never update this vertex again.
+
+However, in a graph with negative edges, the length of the path is not always increasing, such as $A \rightarrow B \rightarrow C$ in figure-1.
+\bigskip
+
+
+\begin{exercise}
+Consider a weighted, directed graph $G$ with $n$ vertices and $m$ edges that have integer weights. A graph walk is a sequence of
+not-necessarily-distinct vertices $v_1,v_2,\ldots,v_k$ such that each pair of consecutive vertices $v_i,v_{i+1}$ are connected by an edge. This is similar to a path, except a walk can have repeated vertices and edges. The length of a walk in a weighted graph is the sum of the weights of the edges in the walk. Let $s,t$ be given vertices in the graph, and $L$ be a positive integer. We are interested counting the number of walks from $s$ to $t$ of length exactly $L$.
+\begin{itemize}
+\item Assume all the edge weights are positive. Describe an algorithm that computes the number of graph walks from $s$ to $t$ of length exactly $L$ in $O((n+m)L)$ time. Prove the correctness and analyze the running time
+\item Now assume all the edge weights are non-negative(but they can be 0), but there are no cycles consisting entirely of zero-weight edges. That is, for any cycle in the graph, at least one edge has a positive weight.\\
+Describe an algorithm that computes the number of graph walks from $s$ to $t$ of length exactly $L$ in $O((n+m)L)$ time. Prove correctness and analyze running time.
+\end{itemize}
+\end{exercise}
+
+\newpage
+\noindent \textbf{Solution - 1}
+
+This is a dynamic programming problem. We need to define a state equation and find the state transition relationship.
+
+Label each vertex in the graph from $1$ to $n$. Let $dp[i, l]$ be the number of walks of length $l$ from vertex $s$ to vertex $i$. Then we have
+$$
+dp[i, l] = \sum_{w(j, i) \le l}^{(j, i) \in E} dp[j, l-w(j, i)]
+$$
+ 
+where $w(j, i)$ means the weight of edge $i \rightarrow j$.
+ 
+The value $dp[t, L]$ is the number of walks from $s$ to $t$ of length exactly $L$ .
+
+\begin{algorithm}[htb]
+\caption{Graph-Walk($G, s, t, L$)}
+\begin{algorithmic}[1]
+\State Fill array $dp[1, \dots, n][0, \dots, L]$ with zero
+\State $dp[s, 0] = 1$
+\For{$l=1$ to $L$}
+    \For{$i=1$ to $n$}
+        \For{$(j, i) \in E$ and $w(j, i) \le l$ }
+        \State $dp[i, l]$ += $dp[j, l-w(j, i)]$
+        \EndFor
+    \EndFor
+\EndFor \\
+\Return $dp[t, L]$
+\end{algorithmic}
+\end{algorithm}
+
+In the algorithm-2 above, $\forall{v} \in V$, we need to scan all the ingoing edge(s) associated with $v$, which needs time $O(m+n)$. And the algorithm repeat this for $L$ times (at most), thus the total time complexity is $O((m+n)L)$ . The correctness is obvious.
+
+
+\bigskip
+\noindent \textbf{Solution - 2}
+
+The only difference between question-1 and this question is that the length of edges can be zero here. If there $\exists (j,i) \in E, j \ge i$ and $w(j,i) = 0$, then $dp[i, l]$ depends on $dp[j, l]$. When we compute $dp[i, l]$, the value $dp[j, l]$ is still unknown.
+
+Since there is no cycles consisting of entirely of zero-weight edges, we consider the subgraph $G'$ consisting of all the zero-weight edges in original graph, the topological ordering sequence of $G'$ must exist. So we can perform a topological sort on $G'$, get the topological sequence $topo\_seq$. Then we can iterate vertices in $topo\_seq$, which can guarantee that $dp[j, l]$ have already been computed when computing $dp[i,l]$ where $(j, i) \in E (j \ge i) $ and $w(j,i) = 0$ (vertex $i$ must be after vertex $j$ in the $topo\_seq$) .
+
+\newpage
+
+\begin{algorithm}[htb]
+\caption{Graph-Walk($G, s, t, L$)}
+\begin{algorithmic}[1]
+\State Fill array $dp[1, \dots, n][0, \dots, L]$ with zero
+\State $dp[s, 0] = 1$
+\State $G' \leftarrow$ zero-weight edges of $G$
+\State $topo\_seq \leftarrow$ topologicalsort($G'$) 
+\State $total\_seq \leftarrow$ $topo\_seq$ + [$V$ - $topo\_seq$]
+\For{$l=1$ to $L$}
+    \For{$i$ in $total\_seq$}
+        \For{$(j, i) \in E$ and $w(j, i) \le l$ }
+        \State $dp[i, l]$ += $dp[j, l-w(j, i)]$
+        \EndFor
+    \EndFor
+\EndFor \\
+\Return $dp[t, L]$
+\end{algorithmic}
+\end{algorithm}
+
+The time complexity of topological sort is only $O(m+n)$, thus the total time complexity is still $((m+n)L)$ .
+
+
+\begin{exercise}
+The diameter of a connected, undirected graph $G=(V,E)$ is the length (in number of edges) of the longest shortest path between two nodes. Show that is the diameter of a graph is $d$ then there is some set $S\subseteq V$ with $|S|\leq n/(d-1)$ such that removing the vertices in $S$ from the graph would break it into several disconnected pieces.
+
+\bigskip
+\noindent \textbf{Solution}
+
+Firstly, we show that such $S$ exists.
+
+Suppose that $d$ is the diameter of $G$, which starts with $u$ and ends with $v$. Then BFS($G$, $u$) (searching starts at $u$) can obtain a BFS-Tree whose root is $u$. This BFS-Tree's height is $d+1$.
+
+Let $S_i$ represent the vertices at level $i (1 \le i \le d+1)$ in BST-Tree, and we can have
+$$
+\sum_{i=1}^{d+1}{|S_i|} = n
+$$
+
+For all $S_i(1 \le i \le d+1)$, removing $S_i$ from $G$ can break $G$ into two disconnected components.
+
+Secondly, we show that for all $S_i$, we have $|S_i| \le n/(d-1)$ .
+
+Proof by contradiction. Suppose there is no such $S$ satisfying $S \subseteq V$ with $|S| \le n/(d-1)$, and $S$ can break $G$ into two disconnected components. Hence for any $S_i$ mentioned above, there must be $|S_i| > n/(d-1)$, which means
+$$
+\sum_{i=1}^{d+1}{|S_i|} > \frac{(d+1)n}{d-1} > n
+$$
+
+This is in contradiction with $\sum_{i=1}^{d+1}{|S_i|} = n$.
+
+Therefore, the conclusion in original problem is always true.
+
+\end{exercise}
+
+\begin{exercise}
+Let $G$ be a $n$ vertices graph. Show that if every vertex in $G$ has degree at least $n/2$, then $G$ contains a Hamiltonian path.
+\end{exercise}
+
+\newpage
+\noindent \textbf{Solution}
+
+Assume that $G=<V, E>$, $|V| = n$, and $\forall{x \in V}, deg(x)$ represents the degree of vertex $x$.
+
+When $n=1$ or $n=2$, the conclusion is obviously true.
+
+Consider the case of $n \ge 3$ . Since $\forall{x \in V}, deg(x) \ge n/2$, hence $\forall{x, y \in V}$ and $x \not= y$, we have $deg(x)+ deg(y) \ge n$ . According to \textbf{Ore's theorem}, there must exist a Hamiltonian circuit in $G$. The Hamiltonian path is included in this circuit.
+
+
+\begin{exercise}
+Show how to find a minimal cut of a graph (not only the cost of minimum cut, but also the set of edges in the cut).
+\end{exercise}
+
+\bigskip
+\noindent \textbf{Solution}
+
+(1) If $G$ is a undirected graph, we can use \textbf{Stoer-Wagner Algorithm} to get its global minimum cut.
+
+\begin{algorithm}[htb]
+\caption{MiniCutPhase(G, $w$, $a$)}
+\begin{algorithmic}[1]
+\State $A \leftarrow \{a\}$
+\While{$A \not= V$}
+    \State add to A the most tightly connected vertex
+\EndWhile
+\State store the \textit{cut-of-the-phase}
+\State shrink $G$ by merging the two vertices added last
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[htb]
+\caption{MiniCut(G, $w$, $a$)}
+\begin{algorithmic}[1]
+\State \textit{cur} $\leftarrow \{ \infty \}$ 
+\While{$|V| > 1$}
+    \State \textbf{MinCutPhase($G, w, a$)}
+    \If{\textit{cut-of-the-phase} is lighter than \textit{cur}}
+        \textit{cur} $\leftarrow$ \textit{cut-of-the-phase}
+    \EndIf
+\EndWhile \\
+\Return \textit{cur}
+\end{algorithmic}
+\end{algorithm}
+
+Notice that there is a starting vertex $a$ in the beginning of \textbf{MinCut}. It can be selected arbitrarily.
+
+\bigskip
+
+(2) If $G$ is a directed graph, according to \textbf{Max-flow min-cut theorem}, the value of max flow equals capacity of min cut in any network (directed graph).
+
+The function \textbf{MaxFlow} is actually \textbf{Ford-Fulkerson Algorithm}, which is used to detect maximum flow from start vertex $s$ to sink vertex $t$ in a given graph. 
+
+\begin{algorithm}[htb]
+\caption{GlobalMinCutInDirectedGraph(G)}
+\begin{algorithmic}[1]
+\State $mincost, cutset \leftarrow$ $\infty, \{\}$
+\For{$s \in V$}
+    \For{$t \in V - \{s\}$}
+        \State $mincost, cutset \leftarrow$ MaxFlow(G, $s$, $t$)
+    \EndFor
+\EndFor \\
+\Return $mincost, cutset$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[htb]
+\caption{MaxFlow(G, $s$, $t$)}
+\begin{algorithmic}[1]
+\State Start with empty flow: $f(e) = 0, \forall{e \in E}$;
+\State Initialize residual network: $G_f$ = $G$;
+\State $p \leftarrow$ search for directed path in $G_f$ from $s$ to $t$
+\State $mincost \leftarrow \infty$
+\While{$p$ exists}
+    \State $D_f$ = $\min\{c_f(e), e \in p\}$
+    \For{$\forall{e \in p}$}
+    \If{forward($e$)}
+    \State $f(e)$ += $D_f$
+    \EndIf
+    \If{backward($e$)}
+    \State $f(e)$ -= $D_f$
+    \EndIf
+    \State $mincost$ = $\min\{mincost, f(e)\}$
+    \EndFor
+    \State update $G_f$
+    \State $p \leftarrow$ search for directed path in $G_f$ from $s$ to $t$
+\EndWhile \\
+\Return $mincost, f$
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{exercise}
+Let $G(V,E)$ be a connected undirected graph with a weight $w(e)>0$ for each edge $e\in E$. For any path $P_{u,v}=<u,v_1,v_2,\ldots,v_r,v>$ between two vertices $u$ and $v$ in $G$,let $\beta(P_{u,v})$ denote the maximum weight of an edge in $P_{u,v}$. We refer to $\beta(P_{u,v})$ as the \textbf{bottleneck weight} of $P_{u,v}$. Define
+\begin{displaymath}
+\beta^*(u,v)=\min\{\beta(P_{u,v}):P_{u,v}\text{ is a path between $u$ and $v$}\}.
+\end{displaymath}
+Give a polynomial algorithm to find $\beta^*(u,v)$ for each pair of vertices $u$ and $v$ in $V$ and a proof of the correctness of the algorithm.
+\end{exercise}
+
+\bigskip
+\noindent \textbf{Solution}
+
+We can modify \textbf{Dijkstra Algorithm} to solve this problem. Let $d(v)$ denote the minimum bottleneck weight, which is $\beta^*(s, v)$ . Then we can have
+$$
+d(v) = \min(d(v), \max(d(u), weight(u, v)))
+$$
+where $\forall{u \in U}$ and $v \in V-U$, $U$ is the vertices set that minimum bottleneck weight has been figured out.
+
+\newpage
+
+\begin{algorithm}[htb]
+\caption{$\beta^{*}$($G,s,t$)}
+\begin{algorithmic}[1]
+\For{$x \in V$}
+    \State $d(x) = \infty$
+\EndFor
+\State $d(s) = 0$
+\While{$V$ is not empty}
+    \State $p \leftarrow $ vertex $t \in V$ with min $d(t)$
+    \State remove $p$ from $V$
+    \For{all outgoing neighbors $q$ of $p$}
+        \State $d(q) = \min(d(q), \max(d(p), weight(p, q))$
+    \EndFor
+\EndWhile \\
+\Return $d(t)$
+\end{algorithmic}
+\end{algorithm}
+
+\bigskip
+\noindent \textbf{Correctness Proof}
+
+Proof by induction.
+
+When $n=1$ or $n=2$, it is obviously correct.
+
+Assume that when $n=k$, set $S$ have recorded $k$ vertices' minimum bottleneck weight, which are correct.
+
+Consider the case of $n = k+1$. Let $v$ denote the vertex the algorithm are handling. Suppose $d(v)$ is not the minimum bottleneck weight, then there must be $\exists u \notin S$ and it will let $w < d(v)$ occur in a path, which starts in $S$ and reaches $v$ through $u$.
+
+However, according to the definition of equation $d(x)$, we have $d(v) \le d(u)$. For the minimum bottleneck weight of the path passing through $u$, there must be $w > d(u) \ge d(v)$. This is in contradiction with $w < d(v)$ mentioned above.
+
+So far, the correctness of the algorithm has been proved.
+
+
+\begin{exercise}
+Let $G=(V,E)$ be a directed graph. Give a linear-time algorithm that given $G$, a node $s\in V$ and an integer $k$ decides whether there is a walk in $G$ starting at $s$ that visits at least $k$ distinct nodes.
+\end{exercise}
+
+\bigskip
+\noindent \textbf{Solution}
+
+If $G$ is a DAG, then the problem is equivalent to find a path starting at $s$ with $k$ different vertices. This can be solved by DFS or BFS, searching from vertex $s$ . Time complexity is $O(k)$ .
+
+Otherwise, there exists a cycle in $G$, and $G$ will have a similar subgraph as follows. In this case, DFS/BFS will fail.
+\begin{lstlisting}
+             +----- ... ----+
+             |              |
+             V              |
+s -> ... -> v[i] -> ... -> v[j] -> ...
+             |
+             V
+            v[k] -> ...
+\end{lstlisting}
+
+Use \textbf{Tarjan Algorithm} to find out all the strongly connected components in $G$. Let $SSC_x$ denote the strongly connected component where vertex $x$ is in.
+If we do DFS($s$) or BFS($s$) starting with $s$, then when traversing to a vertex $x$, it can go through all the vertices in $SCC_x$, which will increase $|SCC_x|$ distinct nodes to the walk.
+
+This will also work in a DAG, because every single vertex is a strongly connected component in DAG.
+
+
+\begin{algorithm}[htb]
+\caption{check-k-walk(G, s, k)}
+\begin{algorithmic}[1]
+\State $seq \leftarrow$ \textbf{BFS}(G, $s$)
+\State $SCC \leftarrow$ \textbf{tarjan}(G)
+\State $walk \leftarrow$ 0
+\For{$x$ in $seq$}
+    \State $walk$ += $|SCC_x|$
+\EndFor \\
+\Return $walk \ge k$
+\end{algorithmic}
+\end{algorithm}
+
+Time complexity analysis:
+\begin{itemize}
+    \item BFS($s$) will cost $O(V)$.
+    \item \textbf{Tarjan Algorithm} will cost $O(V+E)$ .
+    \item There are $V$ elements in $seq$ at most, thus the \textbf{for} loop will cost $O(V)$ .
+\end{itemize}
+
+Therefore, the total time complexity is $O(V+E)$ .
+
+
+\begin{exercise}
+\textbf{Minimum Bottleneck Spanning Tree}: Given a connected graph $ G $ with positive edge costs, find a
+spanning tree that {minimizes the most expensive edge}.
+\end{exercise}
+
+MBST problem can be solved by \textbf{Camerini's Algorithm}.
+
+Assume that $G=<V, E, W>$, $|V| = m, |E| = n$.
+
+\begin{algorithm}[htb]
+\caption{MBST(G)}
+\begin{algorithmic}[1]
+\State $n \leftarrow |E|$
+\If{$n = 1$}
+    \Return E;
+\Else 
+    \State $sorted\_edges \leftarrow $ sort $E$ by increasing weight order
+    \State $A \leftarrow$ $sorted\_edges[1, \dots, n/2]$
+    \State $B \leftarrow$ $E-A$
+    \State $F \leftarrow$ forest of $G_A$
+    \If{$F$ is connected}
+        \Return MBST($G_A$)
+    \Else
+        \State Combine components in $G_A$
+        \State \textbf{return} $E_A$ + MBST($G_B$)
+    \EndIf
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+Time complexity analysis:
+\begin{itemize}
+    \item The sorting operation will cost $O(E\log{E})$.
+    \item Finding forest in $G_A$ will cost $O(E)$.
+    \item We can use \textbf{Disjoint-set} to judge whether if $F$ is connected and combine each component, which cost $O(E)$ time.
+    \item The sub-MBST recursion calls will reach $T(E/2)$, according to \textbf{Master Theorem}, $T(E) \le cE + T(E/2) \Rightarrow T(E) = O(E)$.
+\end{itemize}
+
+Therefore, the total time complexity of algorithm above is $O(E\log{E})$.
+
+} % end of large
+
+\end{document}

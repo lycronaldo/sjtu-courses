@@ -156,6 +156,12 @@ This depends on whether the graph is sparse or dense.
 And `priority_queue` is used for getting the minium cost here. The time complexity is $O(E\log{V})$ .
 
 ```cpp
+struct node_t
+{
+    int vex, cost;
+    node_t(int v, int c) : vex(v), cost(c) {}
+    bool operator<(const node_t &n) const { return cost > n.cost; }
+};
 unordered_map<int, unordered_map<int, int>> graph;
 vector<int> dijkstra(int V, int start)
 {
