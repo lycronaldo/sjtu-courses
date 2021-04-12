@@ -79,7 +79,7 @@ Paxos 算法中存在 3 个不同的角色：
 
 "a majority" 在论文中没有给出量化的说明，个人理解是严格大于一半就可称为 "a majority" ，而在实际具体的 Paxos 实现当中，可以是 2/3 或者 3/4 等数值。
 
-上面 2 个阶段分别出现了 2 中请求类型，分别为 Prepare Request 和 Accept Request，下面分别记为 $Preq$ 和 $Areq$ 。
+上面 2 个阶段分别出现了 2 中请求类型，分别为 Prepare Request 和 Accept Request，下面分别简记为 `Prepare(n)` 和 `Accept(n, value)`。
 
 算法描述（图出自 Refs [3] ）：
 
@@ -116,12 +116,14 @@ Learner 获取被选定的 Value 的方式可以有 2 种：
 
 论文的第 2.4 小节，说明了一个不满足 Liveness 性质的场景，并提出改进措施。
 
-根据上述的算法，可能出现这么一种场景：存在 2 个 Proposer $P_1$ 和 $P_2$，不断地**交替**向 Acceptor 发送 Prepare 请求，那么 Acceptor 中的 `keepN` 一直增大：
+分别记 Prepare Request 和 Acceptor Request 为 $Preq, Areq$ . 
 
-1. $P_1$ 发送 $Preq(n_1)$ ，Acceptor 接受并把 `keepN` 更新为 $n_1$ 。
-2. $P_2$ 发送 $Preq(n_2), n_2 > n_1$ ，Acceptor 接受并把 `keepN` 更新为 $n_2$ 。
-3. $P_1$ 发送 $Areq(n_1, v_1)$ ，那么 Acceptor 会拒绝，$P_1$ 再次发送 $Preq(n_3), n_3 > n_2$ ，Acceptor 接受并更新 `keepN` 为 $n_3$ 。
-4. $P_2$ 发送 $Areq(n_2, v_2)$ ，那么 Acceptor 会拒绝，$P_2$ 再次发送 $Preq(n_4), n_4 > n_3$ ，Acceptor 接受并更新 `keepN` 为 $n_4$ 。
+根据上述的算法，可能出现这么一种场景：存在 2 个 Proposer $P_1$ 和 $P_2$，不断地**交替**向 Acceptor 发送 Prepare 请求，那么 Acceptor 中的 `max_id` 一直增大，`max_id` 是 Acceptor 自身接收到的最大序号：
+
+1. $P_1$ 发送 $Preq(n_1)$ ，Acceptor 接受并把 `max_id` 更新为 $n_1$ 。
+2. $P_2$ 发送 $Preq(n_2), n_2 > n_1$ ，Acceptor 接受并把  更 `max_id` 新为 $n_2$ 。
+3. $P_1$ 发送 $Areq(n_1, v_1)$ ，那么 Acceptor 会拒绝，$P_1$ 再次发送 $Preq(n_3), n_3 > n_2$ ，Acceptor 接受并更新 `max_id` 为 $n_3$ 。
+4. $P_2$ 发送 $Areq(n_2, v_2)$ ，那么 Acceptor 会拒绝，$P_2$ 再次发送 $Preq(n_4), n_4 > n_3$ ，Acceptor 接受并更新 `max_id` 为 $n_4$ 。
 
 这样的行为不断交替，会形成类似于死锁的状态，最终没有一个 Value 会被选中。
 
