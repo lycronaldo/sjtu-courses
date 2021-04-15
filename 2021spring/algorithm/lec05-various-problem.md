@@ -35,9 +35,7 @@ SAT (Satisfiability) 问题是一个经典的判定问题，且是第一个被�
 
 SAT 问题：是否存在一个对 $V$ 的赋值方案，使得 CNF 表达式为真。显然，SAT 问题的状态空间是 $O(2^n)$ 的。
 
-如果一个 CNF 的每一个 Clause 最多只有一个 Positive Literal ，那么就称为 **Horn Formula** (aka, [Horn Clause](https://simple.wikipedia.org/wiki/Horn_clause)) .
-
-Horn Formula 可以通过贪心算法求解。
+如果一个 CNF 的每一个 Clause 最多只有一个 Positive Literal ，那么就称为 **Horn Formula** (aka, [Horn Clause](https://simple.wikipedia.org/wiki/Horn_clause)) . Horn Formula 可以通过贪心算法求解。
 
 
 
@@ -229,7 +227,7 @@ ILP 问题：给定 $n$ 个变量和与之相关 $m$ 个不等式，求出目标
 
 ## Independent Set, Vertex Cover and Clique
 
-此处保留一个问题：Independent Set, Vertex Cover 和 Clique，三者的相同点/不同点在哪？
+此处保留一个问题：最大独立集，最小点覆盖和最大团问题，三者的相同点/不同点在哪？是否能相互转换？
 
 
 
@@ -262,9 +260,11 @@ Vertex Cover，即点覆盖问题。在图 $G$ 中寻找一个点集 $S$，$S$ �
 
 **团**
 
-Clique，即团问题。
+Clique，中文翻译为「团」。
 
 给定一个有 $n$ 顶点的图 $G=(V,E)$，以及一个非负整数 $k$ 。问：是否存在 $V' \sube V$ ，且 $|V'| \ge k$ ，使得 $\forall{x,y \in V'}$ ，都有 $(x,y) \in E$ 。即：在 $G$ 中寻找一个点数大于等于 $k$ 的完全图（当然也是 $G$ 的子图）。
+
+最大团问题：要求找到上述的 $k$ 的最大值。
 
 
 
