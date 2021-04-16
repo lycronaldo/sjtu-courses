@@ -1,13 +1,6 @@
 ## Lec06 - NP Problem
 
-考试透露：规约 (Reduction) 是必考的。
-
-
-
-- P：多项式时间求解
-- NP：多项式时间验证
-
-P 是 NP 的子集。
+本节课的重点：规约 (Reduction) 是必考的。
 
 
 
@@ -67,7 +60,7 @@ P 是指 Polynomial 这个单词，NP 当然**不是** Non-polynomial（NP 其�
   - 虽然能够在多项式时间内验证，但目前无法在多项式时间内解决，例如 TSP 和 SAT 问题。
 - **NP-Complete(NPC)** is a complexity class which represents the set of any problem in the NP class can be transformed or reduce into NP-Complete problems in polynomial time. (or, a NP problem is NPC if all other NP problems reduce to it.)
   - NPC 是 NP 的一个子集，它包含了这样的元素：NP 中的任何问题都可以多项式时间内规约 (Reduce) 到该子集的某一个元素（也就是说，NPC 是把 NP 中的所有问题经过规约、合并后得到的集合）。
-  - 这意味着：如果能解决一个 NPC 问题，那么所有的 NP 问题都能解决；如果能在多项式时间一个 NPC 问题，那么所有的 NP 都能在多项式时间内解决，那么就能证明 $P=NP$ 。
+  - 这意味着：如果能解决一个 NPC 问题，那么所有的 NP 问题都能解决；如果能在多项式时间一个 NPC 问题，那么所有的 NP 都能在多项式时间内解决，那么就能证明 $P=NP$ 。参考下面 Reduction 一节。
   - SAT 问题是一个 NPC 问题 (aka, Cook-Levin Theorem) 。
 - **NPH (NP-Hard)**: these are the problems that are at least as hard as the NP-Complete problems.
   - NPH 是与 NPC 同等困难的问题（即「可多项式验证但无法多项式解决」）
@@ -79,6 +72,7 @@ P 是指 Polynomial 这个单词，NP 当然**不是** Non-polynomial（NP 其�
 
 - $P \sub NP$ （但是否 $P = NP$ 尚未解决）
 - NPC 是 NPH 和 NP 的交集 
+- 如果存在一个 NPC 问题是 P 问题，那么可证明 $NP=P$ 。
 
 
 
@@ -117,4 +111,37 @@ $h$ 可以视作是 $f$ 的逆映射，即 $h = f^{-1}$ .
 关于 Reduction 的性质：
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210415160530.png"  style="width:67%;" />
+
+
+
+## Tautology
+
+所谓的「重言式」，名字很高大上，实际上就是「永真式」，永远为真的逻辑表达式。
+
+在上一节在阐述 SAT 问题时，提到过合取范式 (Conjunctive Normal Form, CNF)，与之对应的还有析取范式 (Disjunctive Normal Form， DNF)，定义是类似的，就是把 $\land$ 和 $\lor$ 的位置「交换」一下。
+
+那么显然，一个 CNF 经过逻辑非运算后，可以得到一个 DNF，反之亦然。
+
+那么可以引出 Tautology Problem：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210416185456.png"  style="width:67%;" />
+
+## NPI
+
+NPI，即 NP-Intermediate , 是 NP 问题中不包含于 P 和 NPC 问题。不深究了，因为数学课的「精髓」在于：看的越多越混乱。
+
+NPI 问题例子：
+
+- Primality: Given an integer *k* ≥ 2, is *k* a prime number?
+- Composite: Given an integer *k* ≥ 4, are there two integers *p*, *q* ≥ 2 such that *k* = *pq*?
+
+关系图：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210416190902.png"  style="width:67%;" />
+
+## Summary
+
+一些常见问题的归类。
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210416191049.png" style="width:67%;" />
 
