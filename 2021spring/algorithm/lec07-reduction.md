@@ -13,9 +13,18 @@ Refs:
 
 - Rudrata path => Rudrata cycle
 - 3-SAT => Independent Set
-- SET => 3-SAT
+- SAT => 3-SAT
+- Independent Set => Vertex Cover
+- Independent Set => Clique
+- 3D-Matching => ZOE
+- ZOE => Subset Sum
+- ZOE => ILP
 
+TODO:
 
+- 3-SAT => 3D-Matching
+- ZOE => Rudrata Cycle
+- Any Problem => SAT
 
 
 
@@ -95,7 +104,155 @@ $$
 - 证明 2 ：若 $C$ 为真，那么 $C'$ 为真。
   - $C$ 为真，说明至少有一个 $a_i$ 为真。在 $C'$ 中，令与这样的 $a_i$ 搭配的那些 $y$ 为假（不带帽子的 $y$），即可使得 $C'$ 为真。
 
-显然，对于任意的 SAT 表达式，对于它的**长度大于 3 的子句**，都进行如上的变换，最终可以得到一个 3-SAT 表达式。
+显然，对于任意的 SAT 表达式，对于它的**长度大于 3 的子句**，都进行如上的变换，最终可以得到一个 3-SAT 表达式。时间复杂度为 $\sum_{i=1}^{n}k_i$ ，其中 $n$ 是 SAT 的子句个数，这显然是一个多项式时间。
+
+
+
+## Independent Set => Vertex Cover
+
+**Vertex Cover**: 给定图 $G$ 和整数 $b$ ，问：是否存在一个 $b$ 个顶点的集合，覆盖 $G$ 所有的边。
+
+只从问题的定义上看，**最大独立集问题**与**最小点覆盖问题**就已经很相似了。
+
+> A set of nodes $S$ is a vertex cover of graph $G = (V,E)$ **iff** the remaining nodes, $V − S$, are an independent set of $G$.
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210417132857.png"  style="width:70%;" />
+
+
+
+
+
+## Independent Set => Clique
+
+团 (Clique) 问题：给定一个有 $n$ 顶点的图 $G=(V,E)$，以及一个非负整数 $k$ ，在 $G$ 中寻找一个点数等于 $k$ 的完全图（当然也是 $G$ 的子图）。
+
+假设 $S$ 是给定的图 $G=(V,E)$ 的一个独立集，构造 $G$ 的补图 $\overline{G} = (V, \overline{E})$ ，其中 $\overline{E}$ 是 $V$ 对应的完全图的边（任意 2 点均有一边），减去 $E$ 所得的集合。根据独立集和团的定义，那么有：
+
+> A set of nodes $S$ is an independent set of $G$ **iff** $S$ is a clique of $\overline{G}$.
+
+
+
+## 3-SAT => 3D Matching
+
+TODO: It's too long to learn.
+
+
+
+
+
+## 3D Matching => ZOE
+
+**ZOE (Zero-One Equations)**
+
+给定一个 $m \times n$ 的 01 矩阵 $\textbf{A}$，找到一个 $n \times 1$ 维的矩阵 (aka, colume vector) 的 $\textbf{x}$ ，使得 $\textbf{Ax} = \textbf{1}$ .
+
+下面阐述 3D Matching 转换为 ZOE 的规约方法。
+
+> Assume that: In 3D-Matching, there are $m$ boys, $m$ girls, $m$ pets, and $n$ `<bog, gril, pet>` triples.
+
+定义一组 01 变量 $\textbf{x} = (x_1, \dots, x_n)$  ，如果 $x_i = 1$ ，说明第 $i$ 个三元组被选择到匹配集当中，否则该三元组不被选择。
+
+对于每一个男生 $b_i$ ，包含该 $b_i$ 三元组的三元组分别标号为 $j_1, j_2, \dots, j_k$ ，由于一个匹配当中，只能且必须包含 $b_i$ 一次，那么有：
+$$
+x_{j_1} + x_{j_2} + \dots + x_{j_k} = 1
+$$
+对于女生和宠物而言，也是如此。
+
+那么对于上述的一组变量 $\textbf{x}$ ，可以得到 $3m$ 个这样的方程，我们把这 $3m$ 个方程按照男生，女生，宠物的顺序（三者顺序可任意）排列，再写成矩阵的形式，其实就可以得到：求出解向量 $\textbf{x}$ ，使得 $\textbf{Ax} = \textbf{1}$ .
+
+下图是 3D-Matching 转换为 ZOE 的一个例子。
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210417142121.png" style="width:67%;" />
+
+对于左边的 3D-Matching 的例子，一共给定 9 个待匹配对象（用圆表示），待选择的三元组一共 5 个（用三角形表示）。
+
+对于矩阵 $\textbf{A}$ 而言，一共 9 行，分别代表 3D-Matching 中的 9 个对象。一共 5 行，代表给出的三元组集合中有 5 个元素。
+
+
+
+## ZOE => Subset Sum
+
+**Subset Sum** - Find a subset of a given set of integers that adds up to exactly $W$.
+
+这 2 个问题都是 ILP 问题的一个特殊情形。
+
+- ZOE 的解向量 $\textbf{x}$ 是 $n$ 维的，其中的每一个元素只能取 0 或者 1 ，解空间为 $2^n$ 。
+- Subset Sum 中，给定集合的每一个元素，要么取，要么不取，集合大小为 $n$ ，解空间也是 $2^n$ 。
+
+从直观上而言，二者似乎是等价的（实际上也是如此），下面阐述规约的过程。
+
+在 ZOE 问题中，给定一个 $m \times n$ 的矩阵 $\textbf{A}$ ，需要求解 $\textbf{x}$ 使得 $\textbf{Ax} = \textbf{1}$ ：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210417143632.png" />
+
+以上述的矩阵为例，它的一个解是 $\textbf{x} = [1 \ 1 \ 0 \ 1]$ .
+
+实际上解向量 $\textbf{x}$ 的中某个 $x_i$ 的含义为：是否选择 $\textbf{A}$ 的第 $i$ 列（根据矩阵乘法的定义）。
+
+如果把 $\textbf{A}$ 的每一列看作一个二进制数，即：
+$$
+\begin{aligned}
+(10010)_2 &= 18 \\
+(00101)_2 &= 5  \\
+(00100)_2 &= 4  \\
+(01000)_2 &= 8
+\end{aligned}
+$$
+而我们的目标是得到一个 5 维的全 1 向量 $\textbf{1} = (11111)_2 = 31$ ，那么问题就可以转换为：从集合 $\{18, 5, 4, 8\}$ 中选取若干元素，这些元素的和是 31 ，这就是 Subset Sum 问题。
+
+
+
+## ZOE => ILP
+
+回顾 ILP 问题：
+
+> In ILP we are looking for an integer vector $\textbf{x}$ that satisfies $\textbf{Ax} \le \textbf{b}$, for given matrix $\textbf{A}$ and vector $\textbf{b}$.
+
+那么，怎么把 ZOE 中的等式规约为 ILP 中的不等式呢？
+
+ZOE 实际上是在求解一组 $\textbf{x} = \{x_1, \dots, x_n\}$ ，其中，每个 $x_i$ 为 0 或者 1 ，那么显然，可以得到一组约束条件：
+$$
+\begin{aligned}
+-x_i &\le 0 \\
+x_1 &\le 1
+\end{aligned}
+$$
+此外，对于 ZOE 的任意一个方程 $\sum{x_i} = 1$ ，比如 $x_1 + x_3 + x_4 = 1$ , 同样可以写成：
+$$
+\begin{aligned}
+-(x_1 + x_3 + x_4) &\le -1 \\
+x_1 + x_3 + x_4 &\le 1
+\end{aligned}
+$$
+对于 ZOE 的每一个变量 $x_i$ 和所有的等式方程，都进行上述的改写操作，最终的问题就「泛化」为一个 ILP 问题。
+
+
+
+## ZOE => Rudrata Cycle
+
+Rudrata Cycle 问题是在一个**非完全图**中，找到一个哈密顿环路。
+
+TODO: It's too long to learn.
+
+
+
+## Rudrata cycle => TSP
+
+Rudrata cycle 是 TSP 的一个变种，它到 TSP 到规约其实是很简单的：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210417155916.png" style="width:67%;" />
+
+下面讨论 $\alpha$ 的取值：
+
+- 如果 $\alpha = 1$ ，那么 TSP 中所有的边均为 1 或者 2 。对于不同的城市 $i,j,k$ ，必然有 $d_{ij} + d_{jk} \ge d_{ik}$ 。因此，贪心策略得到的路径必然是最优的，我们只需要找到一个长度为 $n$ 环路即可。
+
+- 如果 $\alpha$ 是一个很大的值，那么上述 $d_{ij} + d_{jk} \ge d_{ik}$ 的性质不成立。所以 TSP 的解只能是以下的 2 种情况之一：
+
+  - TSP 环路的权值为 $n$ 。
+
+  - TSP 环路的权值至少为 $n + \alpha$ 。
+
+注意到，如果 $\alpha > 1$ ，这里 $[n+1, n+\alpha)$ 这一区间的值是不可能为 TSP 的解。根据 Refs [1] 的 Chapter 9，这一 "Gap" 意味着：除非 $P=NP$ 得到证明，否则不可能通过贪心或者近似算法去求解 TSP 问题。
 
 
 
@@ -103,7 +260,10 @@ $$
 
 Reduce 这样一个过程，从英文单词的含义上理解，理应是把一个问题 $P$ 简化为 $P'$ ，使得它更容易解决。
 
-然而往往并非如此，比如 NPC 问题是所有 NP 问题的 Reduction 的结果，这里的 "Reduction" 试图把多个问题「汇总」为一个问题 $P'$ ，这样的本意是：只要我们能解决 $P'$ ，那么我们就能解决 Reduction 前的所有 NP 问题。
+然而往往并非如此，比如
+
+- NPC 问题是所有 NP 问题的 Reduction 的结果，这里的 "Reduction" 试图把多个问题「汇总」为一个问题 $P'$ ，这样的本意是：只要我们能解决 $P'$ ，那么我们就能解决 Reduction 前的所有 NP 问题。
+- ZOE 从 01 **等式**方程规约为一般的、更具普遍性的**不等式**方程。
 
 因此，从这个角度来看，Reduction 并没有把问题的难度简化，反而有可能增加其困难程度。也就是说，$P$ 经过 Reduction 得到的 $P'$，其难度至少是**「大于等于」**$P$ 的。
 
