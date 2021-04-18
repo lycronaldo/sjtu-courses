@@ -90,7 +90,7 @@ P 是指 Polynomial 这个单词，NP 当然**不是** Non-polynomial（NP 其�
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210415154917.png" style="width:60%;" />
 
-coNP 的自然描述：
+coNP 的自然语言描述：
 
 > If a problem X is in NP, then its complement, $\overline{X}$ is in coNP. coNP contains problems that have **a polynomial time verification for “no”** answers - if given a solution that does not solve the problem, it is easy to verify if that solution does not work.
 
