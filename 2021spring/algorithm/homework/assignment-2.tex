@@ -1,0 +1,220 @@
+\documentclass{article}
+
+\usepackage{enumitem} % list item
+\usepackage{graphicx} % insert image
+
+\usepackage{times}
+\usepackage{a4wide}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{stmaryrd}
+\usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{graphics}
+\usepackage{epsfig}
+%\usepackage{ramacros}
+
+\addtolength{\textwidth}{20mm}
+\addtolength{\oddsidemargin}{-10mm}
+\addtolength{\textheight}{18mm}
+\addtolength{\topmargin}{-9mm}
+
+\newcounter{exercise}
+\setcounter{exercise}{0}
+\newcommand{\exercise}{
+        \addtocounter{exercise}{1}
+        \vspace{0.2in}
+        \noindent
+        {\bf \theexercise .}
+        }
+
+\newcommand{\REMARK}[1]{}
+
+
+\newcommand{\NEWPART}{\vspace{.1in}
+              \noindent}
+
+\newcommand{\<}{
+    \langle}
+
+\renewcommand{\>}{
+    \rangle}
+
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\pagestyle{plain} \pagenumbering{arabic}
+
+
+
+\title{{\bf Assignment 2 - Submission}}
+\author{Jianbang Xian - 120037910056}
+\date{2021/04/21}
+
+\begin{document}
+\maketitle
+
+%{\large \noindent
+%\begin{tabular}{lcl}
+%{Jan 17 2007}.
+%\end{tabular}
+%}
+
+{\large
+
+
+
+
+
+\begin{exercise}
+\textsf{STING SAT} is the following problem: given a set of clauses(each a disjunction of literals) and an integer $k$, find a satisfying assignment in which at most
+$k$ variables are true, if such an assignment exists. Prove that \textsf{STING SAT} is NP-complete.
+\end{exercise}
+
+\bigskip \noindent
+\textbf{Solution}
+\begin{enumerate}[label=\arabic*)]
+    \item Show that \textsf{STING SAT} is a NP problem. \\
+    Given a assignment $I$, it easy to verify whether if there are at most $k$ variables are true, and verify whether if $I$ is a satisfying assignment in $O(n)$ time, where $n$ is the number of variables. Therefore, \textsf{STING SAT} is a NP problem.
+    \item Show that \textsf{STING SAT} is NP-complete by reducing \textsf{SAT} to it. \\
+    Given a formula $f$ with $n$ variables, let $I(f,n)$ denote an instance of \textsf{SAT}. Let $n=k$, then $I(f,k)$ means there are at most $k$ variables are true in formula $f$ (since it has only $k$ variables), which implies that $I(f,k)$ is an instance of \textsf{STING SAT}. \\
+    The reduction can be done in polynomial time. Since \textsf{SAT} is NP-complete, \textsf{STING SAT} is also NP-complete.
+\end{enumerate}
+
+\begin{exercise}
+You are given a directed graph $G=(V,E)$ with weights we on its edges $e\in E$. The weights can be negative or positive. The \textsf{ZERO-WEIGHT-CYCLE PROBLEM} is to decide if there is a simple cycle in $G$ so that the sum of the edge weights on this cycle is exactly $0$. Prove that this problem is NP-complete.
+\end{exercise}
+
+\bigskip 
+\noindent \textbf{Solution}
+
+\begin{enumerate}[label=\arabic*)]
+    \item Given a simple cycle in $G$, we can verify whether if its weight is $0$ in polynomial time. So this problem is a NP problem.
+    \item Proof that it is NP-complete by reducing \textbf{Subset Sum} to it. 
+    \begin{itemize}
+        \item For a Subset Sum instance $I(A, s)$, where $A=\{a_1, \dots, a_n\}$ is a set containing $n$ numbers, and $s$ is the goal sum. And we let $s =  0$ in this case.
+        \item Construct directed graph $G=(V,E)$, in which there are $2n$ vertices and $n$ disjoint edges. And  $\forall{e_i \in E}$ we give $e_i$ a weight of $a_i$, as shown in Figure-1(a). For each $u_i$, we add edges from every $v_j$ to it with weight $0$, as shown in Figure-1(b).
+        \item In this case, the instance $I(A,s)$ has a solution if and only if $G$ has a zero-weight-cycle. Since problem Subset Sum is NP-complete, \textsf{ZERO-WEIGHT-CYCLE PROBLEM} is also NP-complete.
+    \end{itemize}
+\end{enumerate}
+\newpage
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{images/A2Q2.png}
+    \caption{Constructed Directed Graph}
+    % \label{fig:galaxy}
+\end{figure}
+
+
+\begin{exercise}
+Show that \textsf{INDEPENDENT SET PROBLEM} is NP-hard even graphs of maximum degree $3$.
+\end{exercise}
+
+\bigskip \noindent 
+\textbf{Solution} 
+\bigskip
+
+We will prove that it's NP-complete here.
+
+\begin{enumerate}[label=\arabic*)]
+    \item Given a graph $G$ and its subset $S$ where $|S| = k$. Obviously, $S$ is an independent set if and only if any two vertices in $S$ are not adjacent, which can be done in $O(k^2)$ time. Therefore, it's a NP problem.
+    
+    \item For a Independent Set instance $I = (G, g)$ where $G = (V,E)$ and $g$ is the size of independent set. We will reduce $I$ to $I'=(G', g')$ where $G' = (V', E')$ is a graph of maximum degree 3. 
+    \\ \\
+    $\forall{v \in V, degree(v) = 4}$, suppose the vertices connected to $v$ is $\{x_1, x_2, x_3, x_4\}$. As shown in figure-2, we can split $v$ into $v_1$ and $v_2$, and add a dummy vertex $p$ between them. Let $G$ denote the original graph, and $G'$ denote the graph after transformation. According to the definition of independent set, there we can have:
+    \begin{itemize}
+        \item If an independent set of $G$ contains $v$, then there exists a corresponding independent set of $G'$, which must contain $v_1$ and $v_2$.
+        \item If an independent set of $G$ does not contain $v$, then there exists a corresponding independent set of $G'$, which must contain vertex $p$.
+    \end{itemize}
+    And we can have an important conclusion: \textbf{$G$ has an independent set of size $k$ if and only if $G'$ has an independent set of size $k+1$.} 
+    \\ \\
+    For the other vertices whose degree larger than 4, we can do the similar transformation over them, reducing their degrees to no more than 3.
+    \\ \\
+    For all vertices $v$, with degree $d(v) > 3$ in $G$, do this transformation over them, and we can get $G'$, which is a graph of maximum degree 3. And every transformation over such vertex, will increase the size of corresponding independent set in $G'$ by $\Delta{d} = d-3$. 
+    \\ \\ 
+    Therefore, instance $I = (G, g)$ has solution(s) if and only if instance  $I'=(G', g')$ has solution(s), where $g' = g + \sum_{v \in M}{\Delta{d_v}}$, and $M$ is a set containing all vertices with $d(v) > 3$ in $G$. The reduction can be done in polynomial time.
+    \\ \\
+    As we know, the original independent set problem is NP-complete, thus the new independent set problem with graph of maximum degree 3 is NP-complete, too.
+\end{enumerate}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{images/A2Q3.png}
+    \caption{Reduce 4-degree vertex to 3-degree vertex}
+    % \label{fig:galaxy}
+\end{figure}
+
+
+\begin{exercise}
+For your new startup company, Uber for algorithms, you are trying to assign projects to employees. You have a set $P$ of $n$ projects and a set of $E$ of $m$ employees. Each employee $e$ can only work on one project, and each project $p\in P$ has a subset $E_p\subseteq E$ of employees that must be assigned to $p$ to complete $p$. The decision problem we want to solve is whether we can assign the employees to projects such that we can complete(at least) $k$ projects.
+\begin{itemize}
+\item Give a straightforward algorithm that checks whether any subset of $k$ projects can be completed to solve the decisional problem. Analyze its time complexity in terms of $m,n$ and $k$.
+\item Show that the problem in NP-hard via a reduction from 3D-matching.
+\end{itemize}
+\end{exercise}
+
+\bigskip
+\noindent \textbf{Solution - 1}
+
+There are $C_{n}^{k}$ subsets of $P$ with size $k$. For each such subset $P' \subseteq P$, we can do this algorithm:
+
+\begin{algorithm}[htb]
+\caption{\textbf{check}($P'$)}
+\begin{algorithmic}[1]
+\State \textit{assigned} $\rightarrow \{\}$
+\For{each $p$ in $P'$}
+    \For{each $e$ in $E_{p}$}
+        \If{\textit{assigned} contains $e$}
+            \Return \textbf{false}
+        \Else
+            \ insert $e$ into $assigned$
+        \EndIf
+    \EndFor
+\EndFor \\
+\Return \textbf{true}
+\end{algorithmic}
+\end{algorithm}
+
+If there exists one \textbf{check($P'$)} returned \textbf{true}, then the questions here is satisfied. Otherwise, not satisfied. The time complexity is $O(mC_{n}^{k})$ .
+
+\newpage
+\noindent \textbf{Solution -2}
+
+Suppose each project needs 3 employees and the number of employees $m=3n$ here. ($m \ge 3n$ is a more "loose" case, which makes the problem simpler, and we consider the worst case here.)
+
+Then we can divide $E$ into 3 size-equal sets $A$, $B$ and $C$, where $|A| = |B| = |C| = m/3$. Now the problem is to find a matching set $M$  among $A$, $B$ and $C$. For each triple $p=(a,b,c) \in M$, assign $p$ to the corresponding project. There can be no less than $k$ projects be satisfied if and only if $|M| \ge k$ .
+
+The reduction can be done in polynomial time. Since 3D-Matching Problem is NP-hard, the Project Assignment Problem here is also NP-hard. 
+
+\begin{exercise}
+Let $d\in \mathbb{N}$. The $d$-\textsf{COLORABILITY PROBLEM} is to decide whether a given graph $G=(V,E)$ can be colored by $d$ colors. i.e., whether there exists a function $f:V\rightarrow \{1,2,\ldots,d\}$ such that for every $u,v\in V$ with $(u,v)\in E$ we have $f(u)\neq f(v)$. Formulate  $d$-\textsf{COLORABILITY} as a search problem. Give a reduction from $4$-\textsc{COLORABILITY} to $7$-\textsf{COLORABILITY}.
+\end{exercise}
+
+\bigskip 
+\noindent \textbf{Solution}
+\begin{enumerate}[label=\arabic*)]
+    \item Given $G(V,E)$ and a function $f:V \rightarrow colors$, we can traverse every edge $e=(u,v)$ in $E$ to verify whether if $f(u) \neq f(v)$ and record the number of colors. If the number of colors is less than or equal $d$, then output \textbf{true}. Otherwise, \textbf{false}. This can be done in polynomial time, thus it's a search problem.
+    \item Given $G=(V,E)$, we can construct $G'=(V', E')$ by adding a vertex into $G$ and connecting it to all vertices in $V$. In this case, $G$ is 4-colorable if and only if $G'$ is 5-colorable. This can be done in polynomial time. Similarly, we can reduce 5-COLORABILITY to 6-COLORABILITY, and reduce 6-COLORABILITY to 7-COLORABILITY. 
+    \\
+    Since reduction has the transitivity property, we can reduce 4-COLORABILITY to \\ 7-COLORABILITY.
+\end{enumerate}
+
+\begin{exercise}
+In the \textsf{MAX CUT} problem, we are given an undirected graph $G$ and an integer $K$ and have to decide whether there is a subset of vertices $S$ such that there are at least $K$ edges that have one endpoint in $S$ and one endpoint in $\bar{S}$. Prove that this problem is NP-complete.
+\end{exercise}
+
+\begin{exercise}
+Let \textsf{QUADEQ} be the language of all satisfiable sets of \textit{quadratic equations} over $0/1$ variables(a quadratic equations over $u_1,\ldots,u_n$ has the form $\sum_{i,j\in[n]}a_{i,j}u_iu_j=b$)where addition is modulo $2$. Show that \textsf{QUADEQ} is NP-complete.
+\end{exercise}
+
+\begin{exercise}
+In a typical auction of $n$ items, the auctioneer will sell the $i$th item to the person that gave it the highest bid. However, sometimes the items sold are related to one another(e.g., think of lots of land that may be adjacent to one another)and so people may be willing to pay a high price to get, say, the three items $\{2,5,17\}$, but only if they get all of them together. In this case, deciding what to sell to whom might not be an easy task. The \textsf{COMBINATORIAL AUCTION PROBLEM} is to decide, given numbers $n,k$, and a list of pairs $\{(S_i,x_i)\}^m_{i=1}$ where $S_i$ is a subset of $[n]$ and $x_i$ is an integer, whether there exist disjoint sets $S_{i_1},\ldots,S_{i_l}$ such that $\sum_{j=1}^lx_{i_j}\geq k$. That is, if $x_i$ is the amount a bidder is willing to pay for the set $S_i$, then the problem is to decide if the auctioneer can sell items and get a revenue of at least $k$, under the obvious condition that he can't sell the same item twice. Prove that \textsf{COMBINATORIAL AUCTION} is NP-complete.
+\end{exercise}
+
+} % end of large
+\end{document}
+

@@ -112,6 +112,13 @@ $h$ 可以视作是 $f$ 的逆映射，即 $h = f^{-1}$ .
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210415160530.png"  style="width:67%;" />
 
+**Reduction to NPC**
+
+- NP-complete problems are hard: all other search problems reduce to them.
+- For a problem to be NP-complete, it can solve every NP problem in the world.
+- If even one NP-complete problem is in P, then P = NP.
+- **If a problem A is NP-complete, a new NP problem B is proved to be NP-complete, by reducing A to B.**
+
 
 
 ## Tautology
@@ -145,3 +152,10 @@ NPI 问题例子：
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210416191049.png" style="width:67%;" />
 
+常见的 NPC 问题：
+
+- SAT
+- Independent Set
+- Set Cover
+
+根据 Wikipedia ，一共有 21 个 NPC ：https://en.wikipedia.org/wiki/Karp%27s_21_NP-complete_problems

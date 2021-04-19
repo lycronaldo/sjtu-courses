@@ -434,8 +434,12 @@ This will also work in a DAG, because every single vertex is a strongly connecte
 \State $seq \leftarrow$ \textbf{BFS}(G, $s$)
 \State $SCC \leftarrow$ \textbf{tarjan}(G)
 \State $walk \leftarrow$ 0
+\State $reached \leftarrow$ \{\}
 \For{$x$ in $seq$}
+    \If{$x \notin reached$ }
     \State $walk$ += $|SCC_x|$
+    \State $reached \leftarrow reached \cup SCC_x$
+    \EndIf
 \EndFor \\
 \Return $walk \ge k$
 \end{algorithmic}
@@ -494,3 +498,4 @@ Therefore, the total time complexity of algorithm above is $O(E\log{E})$.
 } % end of large
 
 \end{document}
+
