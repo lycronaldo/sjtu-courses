@@ -116,6 +116,8 @@ $$
 
 > A set of nodes $S$ is a vertex cover of graph $G = (V,E)$ **iff** the remaining nodes, $V − S$, are an independent set of $G$.
 
+这意味着：最小点覆盖集合 $S$ ，那么 $V-S$ 是最大独立集。
+
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210417132857.png"  style="width:70%;" />
 
 

@@ -26,7 +26,7 @@ SAT (Satisfiability) 问题是一个经典的判定问题，且是第一个被�
 在 SAT 问题中：
 
 - 变量 (Variable): 给定 $n$ 个变量 $V = \{x_1, x_2, \dots, x_n\}$ ，其中每个变量都是 boolean 类型的，只能为 1 或者 0 .
-- 文字 (Literal): 由 $x_i$ 加上逻辑非 $\lnot$ 运算符组成的符号 $x_i$ 和 $\lnot x_i$，文字集合 $L = \{x_1, \lnot{x_1}, \dots, x_n, \lnot {x_n}\}$ .
+- 文字 (Literal): 由 $x_i$ 加上逻辑非 $\lnot$ 运算符组成的符号 $x_i$ 和 $\lnot x_i$（或者记为 $\overline{x_i}$），文字集合 $L = \{x_1, \lnot{x_1}, \dots, x_n, \lnot {x_n}\}$ .
   - $x_i$ 称为 Positive Literal，$\lnot{x_i}$ 称为 Negative Literal 。
 - 子句 (Clause): 若干个 Literal 经过析取操作 (Disjunction) 构成，例如 $c = x_1 \lor x_2 \lor (\lnot{x_5} )$ ，子句的长度就是文字的个数。析取实际上就是 or 运算。
 - 合取范式 (Conjunctive Normal Form, CNF): 若干个子句经过合取构成，例如 $c_1 \land c_2 \land c_3$ 。合取实际上是 and 运算。
