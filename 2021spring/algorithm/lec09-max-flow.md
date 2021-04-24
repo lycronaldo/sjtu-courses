@@ -167,6 +167,8 @@ $$
 
 **Theorem - Weak Duality**
 
+证明最大流-最小割的弱对偶性。
+
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210422134345.png" style="width:75%;" />
 
 **Corollary**
@@ -215,20 +217,38 @@ $$
 
   
 
-## Analysis
-
-这一节的内容很阴间，我已经不想看了。
+## Further Analysis
 
 复杂度分析的大致想法是：每次找到路径 $P$，都会使得流量至少增加 1 个单位，但最大流量只能为 $|V|C$ （所以最多只能有 $|V|C$ 个 Augmenting Path），$C$ 是图中边的最大流量（边权最大值）。
 
-每次通过 BFS/DFS 找到一个 Augmenting Path，需要在 $O(E)$ 时间，因此总的时间复杂度为 $O(VEC)$ .
+每次通过 BFS/DFS 找到一个 Augmenting Path，需要在 $O(E)$ 时间，因此总的时间复杂度为 $O(VEC)$ ，因此该算法是一个伪多项式算法（与背包问题类似）。而在实际计算机的运行当中，$C$ 是通过比特位来存储的，因此算法复杂度存在一定程度的「指数」成分。
 
-  
+考虑如下图的情况（图来自 Refs[2] ），如果每次找到的 Augmenting Path 是以下 2 条路径的交替：
+
+- $P_1: s \rightarrow u \rightarrow v \rightarrow t$
+- $P_2: s \rightarrow v \rightarrow u \rightarrow t$
+
+显然，每次网络流的容量只增加 1 ，Ford-Fulkerson 算法需要进行 200 次迭代。
+
+针对这一特殊情况，后续还要对该算法进行改进，采用更为「明智」的策略去选取 Augmenting Path:
+
+- 选取 bottleneck capacity 较大（或者最大）的路径
+- 选取边数最少的路径
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210424195817.png" style="width:57%;" />
+
+
+
+此外，在该算法当中还有一个重要的问题：Ford-Fulkerson 算法假定图 $G$ 的边权值都是整数，并且每个边的流量也是整数，在这种假设条件该算法可以找到图 $G$ 的最大流。如果边权值和流量可以为浮点数，那么 Ford-Fulkerson 算法还能正常工作吗？
+
+**Ford-Fulkerson 算法只适用于边权值为有理数的情况。**有理数包括整数和分数，如果为分数，可以对所有权值乘以分母的最小公倍数，转换为整数处理。
+
+为什么无理数不适用呢？可以参考这个 [Slide](https://www.cs.princeton.edu/~wayne/kleinberg-tardos/pdf/07DemoFordFulkerson.pdf) 给出的例子。
 
 ## References
 
 - [1] https://www.cs.princeton.edu/courses/archive/spr04/cos226/lectures/maxflow.4up.pdf
-- [2] KT05 - Algorithm Design
+- [2] KT05 - Algorithm Design (Chapter 7)
 - [3] CLRS - Introduction to Algorithm
 - [4] https://oi-wiki.org/graph/flow/max-flow/
 
