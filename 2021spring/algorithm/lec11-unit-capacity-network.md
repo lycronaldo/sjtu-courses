@@ -1,5 +1,7 @@
 ## Simple Unit-Capacity Network
 
+重点：Hall’s Marriage Theorem 可能会考。
+
 本节课的内容包括：
 
 - Bipartite Matching

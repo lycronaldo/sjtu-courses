@@ -4,9 +4,9 @@
 
 主要内容：
 
-- Capacity-Scaling Algorithm
-- Shortest Augmenting Paths
-- Dinitz’ Algorithm
+- Capacity-Scaling Algorithm, $O(m^2 \log{C})$
+- Shortest Augmenting Paths, $O(m^2n)$
+- Dinitz’ Algorithm, $O(mn^2)$ 
 
 
 
