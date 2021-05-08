@@ -50,8 +50,44 @@ X-Stream:
 
 GridGraph:
 
-- partitions the vertices into *P* equalized vertex chunks, each chunk contains vertices within a contiguous range.
-- 
+- partitions the vertices into **P equalized vertex chunks**, each chunk contains vertices within **a contiguous range**.
+- The whole $P \times P$ blocks can be viewed as a grid, and each edge is put into a corresponding block using the following rule:
+  - the **source** vertex determines the **row** of the block
+  - the **destination** vertex deter- mines the **column** of the block.
+
+
+
+
+
+### 2.2 Discussion
+
+
+
+## 3 The Streaming-Apply Processing Model
+
+### 3.1 Programming Abstraction
+
+### 3.2 Dual Sliding Windows
+
+### 3.3 2-Level Hierarchical Partitioning
+
+### 3.4 Execution Implementation
+
+
+
+## 4 Evaluation
+
+### 4.1 Test Environment
+
+### 4.2 System Comparison
+
+### 4.3 Preprocessing Cost
+
+### 4.4 Granularity of Partitioning
+
+### 4.5 Scalability
+
+
 
 
 
