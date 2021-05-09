@@ -1,0 +1,316 @@
+\documentclass{article}
+
+\usepackage{enumitem} % list item
+\usepackage{graphicx} % insert image
+
+% tikz graph
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\usepackage{times}
+\usepackage{a4wide}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ifthen}
+\usepackage{stmaryrd}
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{graphics}
+\usepackage{epsfig}
+%\usepackage{ramacros}
+
+\addtolength{\textwidth}{20mm}
+\addtolength{\oddsidemargin}{-10mm}
+\addtolength{\textheight}{18mm}
+\addtolength{\topmargin}{-9mm}
+
+\newcounter{exercise}
+\setcounter{exercise}{0}
+\newcommand{\exercise}{
+        \addtocounter{exercise}{1}
+        \vspace{0.2in}
+        \noindent
+        {\bf \theexercise .}
+        }
+
+\newcommand{\REMARK}[1]{}
+
+
+\newcommand{\NEWPART}{\vspace{.1in}
+              \noindent}
+
+\newcommand{\<}{
+    \langle}
+
+\renewcommand{\>}{
+    \rangle}
+
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\pagestyle{plain} \pagenumbering{arabic}
+
+
+\title{{\bf Assignment 3}}
+\author{Xian Jianbang - 120037910056}
+\date{2021/05/09}
+
+\begin{document}
+\maketitle
+
+%{\large \noindent
+%\begin{tabular}{lcl}
+%{Jan 17 2007}.
+%\end{tabular}
+%}
+
+{\large
+
+
+
+
+
+\begin{exercise}
+Prove or disprove the following statement. If all capacities in a network are distinct,
+ then there exists a unique flow function that gives the maximum flow.
+\end{exercise}
+
+\bigskip \noindent
+\textbf{Solution}
+
+The proposition is \textbf{false}. In the following graph, all capacities are distinct, but there are 2 max-flow, which are $s \rightarrow a \rightarrow c \rightarrow t$ and $s \rightarrow b \rightarrow c \rightarrow t$ .
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=6.5cm]{images/A3Q1.png}
+    \caption{A graph with two max-flow}
+    % \label{fig:galaxy}
+\end{figure}
+
+
+\begin{exercise}
+An edge of a flow network is called \textbf{critical} if decreasing the capacity of this edge results in a decrease in the maximum flow value. Present an efficient algorithm that, given an $s$-$t$ network $G$ finds any critical edge in a network(assuming one exists).
+\end{exercise}
+
+\bigskip \noindent
+\textbf{Solution}
+
+Given an $s-t$ flow network $G$, any edge in the minimum-cut is critical. 
+
+To find such edges, firstly compute max-flow algorithm (Ford-Fulkerson Algorithm) on $G$, then we have 2 methods to find the min-cut:
+
+\begin{itemize}
+    \item In the residual network $G_f$, find all vertices that $s$ can reach, as set $A$ (including vertex $s$). Let $B = V-A$, any edge starts from $A$ and ends at $B$ is a critical edge. This method can be done in $O(V)$ time (just do DFS starting from $s$).
+    \item In the residual network $G_f$, any edge with $f(e) = c(e)$ is a critical edge. This method can be done in $O(E)$ time (just check all the edges in $G_f$).
+\end{itemize}
+
+\newpage
+
+\begin{exercise}
+Let $G=(V,E)$ be an undirected weighted graph with two distinguished vertices $s,t\in V$. Give an efficient algorithm to find a minimum weight cut that separates $s$ from $t$.
+\end{exercise}
+
+\bigskip \noindent
+\textbf{Solution}
+
+We can transform the undirected graph $G$ into a directed graph $G'$ through the follwoing steps:
+\begin{itemize}
+    \item For any edge $(s, v)$ connected to $s$ in $G$, construct directed edge $s \rightarrow v$ in $G'$.
+    \item For any edge $(u, t)$ connected to $t$ in $G$, construct directed edge $u \rightarrow t$ in $G'$.
+    \item For any other edge $(u, v)$ in $G$ (which is connected to neither $s$ or $t$), construct 2 edges $u \rightarrow v$ and $v \rightarrow u$ with the same weight in $G'$.
+\end{itemize}
+
+Then we can perform max-flow algorithm over $G'$, then we can also get a min-cut of $G'$, which is also a min-cut of $G$. 
+
+\begin{exercise}
+You are given a matrix with fractional elements between $0$ and $1$. The sum of all numbers in each row and in each column is integer. Prove that we can always round each element to $0$ or $1$ so that the sum of each row and each column remains unchanged and design a polynomial time algorithm to find such a rounding result.
+\end{exercise}
+
+\bigskip \noindent
+\textbf{Solution}
+
+Suppose the size of matrix is $n \times m$.
+
+We can reduce this problem into max-flow problem, each row or each column in the matrix is a vertex in the graph. Let:
+\begin{itemize}
+    \item $r_i$ be the sum of row $i$,
+    \item $c_j$ be the sum of column $j$,
+    \item vertex $x_i$ be the row $i$, and
+    \item vertex $y_j$ be the column $j$.
+\end{itemize}
+
+Then we can construct a graph $G=(V,E)$, in which:
+\begin{itemize}
+    \item $V$ includes a source vertex $s$, a sink vertex $t$, and all the vertices $x_i$ and $y_j$ mentioned above, thus $|V| = m+n+2$.
+    \item As for $E$, construct edges from $s$ to each $x_i$ (whose capacity is $r_i$), and construct edges from each $y_j$ to $t$ (whose capacity is $c_j$). Then construct edges from each $x_i$ to each $y_j$, whose capacities are all 1. Thus, $|E| = mn+m+n$.
+\end{itemize}
+
+For example, if size of the matrix is $4 \times 4$, then we have vertices $x_1 - x_4$ represent 4 rows, and vertices $y_1 - y_4$ to represent 4 columns, as shown in the figure-2 below.
+
+\newpage
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=9cm]{images/A3Q4.png}
+    \caption{Transformation between network and matrix}
+    % \label{fig:galaxy}
+\end{figure}
+
+Let $flow(x_i, y_j)$ represent the flow value on edge $(x_i, y_j)$ (either 0 or 1), and let $value(i, j)$ represent the value of $matrix[i, j]$ (either 0 or 1, too). We can find that $flow(x_i, y_j)$ and $value(i,j)$ have the same meaning. As the following 2 equations always hold at the same time:
+$$
+\begin{aligned}
+  &\forall{i \in [1, n]}, & \sum_{\forall{j \in [1, m]}}{flow(x_i, y_j)} &= r_i &= \sum_{\forall{j \in [1, m]}}{value(i,j)} \\
+  &\forall{j \in [1, m]}, & \sum_{\forall{i \in [1, n]}}{flow(x_i, y_j)} &= c_j &= \sum_{\forall{i \in [1, n]}}{value(i,j)}
+\end{aligned}
+$$
+
+In the max-flow of $G$, if $flow(x_i, y_j)$ is 1, then $matrix[i, j]$ should be 1, otherwise 0.
+
+We can say the origin proposition holds \textbf{iff} network flow $G$ has a max-flow with value $\sum_{i=1}^{n}{r_i}$.
+
+\begin{exercise}
+Suppose that, in addition to edge capacities, a flow network has \textbf{vertex capacities}.
+That is each vertex has a limit on how much flow can pass though. Show how to transform a flow network $G=(V,E)$ with vertex capacities into an equivalent flow network $G'=(V',E')$ without vertex capacities, such that a maximum flow in $G'$ has the same value as a maximum flow in $G$. How many vertices and edges does $G'$ have?
+\end{exercise}
+
+\bigskip \noindent \textbf{Solution}
+
+We can do the following transformations for $\forall{v \in V - \{s, t\}}$:
+\begin{itemize}
+    \item Split $v$ into 2 vertices $v_1$ and $v_2$, and construct edge $v_1 \rightarrow v_2$ in $G'$, whose capacity is the capacity of $v$.
+    \item For each edge $x \rightarrow v$ ends with $v$, construct edge $x \rightarrow v_1$ in $G'$.
+    \item For each edge $v \rightarrow x$ starts with $v$, construct edge $v_2 \rightarrow x$ in $G'$.
+\end{itemize}
+
+After these transformations, $G'$ is an equivalent flow network of $G$.
+
+The number of vertices in $G'$ is $|V'| = 2(|V|-2) + 2$, and the number of edges in $G'$ is $|E'| = |E| + |V| - 2$.
+
+\newpage
+
+\begin{exercise}
+Consider a bipartite graph $G=(X\cup Y,E)$ with parts $X$ and $Y$. Each part contains $2k$ vertices (i.e. $|X|=|Y|=2k$). Suppose that $deg(u)\geq k$ for every $u\in X\cup Y$. Prove that $G$ has a perfect matching.
+\end{exercise}
+
+\bigskip \noindent \textbf{Solution}
+
+Let $S$ be a subset of nodes, and $N(S)$ be the set of nodes that are adjacent to nodes in $S$.
+
+\smallskip
+
+According to \textbf{Hall's Theorem}, we need to prove that $|N(S)| \ge |S|$ for all subsets $S \subseteq X$.
+
+\smallskip
+
+We will divide all the subsets $S$ of $X$ into 2 parts: $|S| \le k$ and $|S| > k$.
+\begin{itemize}
+    \item If $|S| \le k$, since $deg(u) \ge k$ for every $u \in X$, $|N(S)| \ge |S|$ must hold in such case.
+    \item If $|S| > k$, we prove $|N(S)| \ge |S|$ by contradiction.
+    \begin{enumerate}[label=\arabic*)]
+        \item Suppose that $|N(S)| < |S|$ .
+        \item Because of $|X| = 2k$, we have $|X - S| < k$.
+        \item And we can find that $N(X-S)$ is equivalent to $Y - N(S)$. That is to say, $\forall{v \in Y - N(S)}$, $v$ can only be adjacent to vertices in $X-S$. Since $|X - S| < k$, we have $deg(v) < k$ for any $v \in Y - N(S)$, which is in contradiction with $deg(u) \ge k$ for every $u \in X \cup Y$.
+        \item Hence we have $|N(S)| \ge |S|$.
+    \end{enumerate}
+\end{itemize}
+
+In conclusion, $|N(S)| \ge |S|$ always holds. According to Hall's Theorem, $G$ has a perfect matching.
+
+
+\begin{exercise}
+You are designing a experiment in which you want to measure certain properties $p_1,\ldots ,p_n$ of a yeast culture. You have a set of tools $t_1,\ldots ,t_m$ that can each measure a subset $S_i$ of the properties. For example, tool $t_i$ measures $S_i$ may equal $\{p_7,p_8\}$. To be sure that your results are not due to noise or other artifact, you must measure every property at least $k$ times using $k$ different tools.
+\begin{itemize}
+\item Give a polynomial-time algorithm that decides whether the tools you have are sufficient to measure the desired properties the desired number of times.
+\item Suppose each tool $t_i$ comes from manufacturer $M_i$ and we have the additional constraint that the tools to test any property $p_i$ can't all come from the same manufacturer. Give a polynomial-time algorithm to solve this problem.
+\end{itemize}
+\end{exercise}
+
+\bigskip \noindent \textbf{Solution - 1} \bigskip
+
+This problem can be reduced into \textbf{Circulation with Lower Bound Problem}, as shown in figure-3.
+
+\begin{itemize}
+    \item Add source node $s$ and sink node $t$.
+    \item For each tool $t_i$, construct edge $s \rightarrow t_i$ with capacity $\infty$.
+    \item If tool $t_i$ can measure properties $S_i = \{p_{j_1}, \dots, p_{j_k}\}$, then construct edge from $t_i$ to every $p_{j_1}, \dots, p_{j_k}$, whose capacity is $1$.
+    \item For each property $p_j$, construct edge $p_j \rightarrow t$ with capacity $\infty$, but the flow value on these edges must be at least $k$ (i.e. $k \le f(p_j \rightarrow t) \le \infty$).
+\end{itemize}
+
+In such case, the origin problem has a solution \textbf{if and only if} there is a valid \textbf{circulation with lower bounds} in the transformed network $G$.
+
+And we can see that, for each augmenting path in $G_f$, its bottleneck is 1, hence the max-flow algorithm can be done in $O(|V||E|)$ time.
+
+\newpage
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=9cm]{images/A3Q7.png}
+    \caption{Transformed network flow $G$}
+    % \label{fig:galaxy}
+\end{figure}
+
+
+\bigskip \noindent \textbf{Solution - 2} \bigskip
+
+In this problem, we need to add vertices to represent the relationship between manufacturers and properties.
+
+As shown in figure-4:
+\begin{itemize}
+    \item We add vertices ${M_i}{p_j}$, which means that tools from manufacturer $M_i$ can measure property $p_j$.
+    \item For each tool $t_i$, if it is produced by $M_k$, and could be used to measure $p_j$, then we will:
+    \begin{enumerate}[label=\arabic*)]
+        \item construct edge $t_i \rightarrow {M_k}{p_j}$ with capacity 1. 
+        \item let the capacity of edge ${M_k}{p_j}$ be $k-1$.
+    \end{enumerate}
+    \item The edges $s \rightarrow t_i$ and $p_j \rightarrow t$ are same as the first problem.
+    \begin{enumerate}[label=\arabic*)]
+        \item Edge $s \rightarrow t_i$ has $\infty$ capacity.
+        \item Edge  $p_j \rightarrow t$ also has $\infty$ capacity, but has a lower bound $k$ of flow value (i.e. $k \le f_e$).
+    \end{enumerate}
+\end{itemize}
+
+
+We can see that, for each property $p_j$, it can only be measured $k-1$ times by one tool at most. And this implies that property $p_j$ should be measured by at least 2 tools.
+
+The origin problem has a solution \textbf{if and only if} there exists a valid \textbf{circulation with lower bounds} in $G$.
+
+Same as the first problem, the max-flow here can be done in polynomial time.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{images/A3Q7-2.png}
+    \caption{Transformed network flow $G$}
+    % \label{fig:galaxy}
+\end{figure}
+
+\newpage
+
+\begin{exercise}
+Consider a flow network $G=(V,E)$ with positive edge capacities $\{c(e)\}$. Let $f:E\rightarrow \mathbb{R}_{\geq 0}$ be a maximum flow in $G$, and $G_f$ be the residual graph. Denote by $S$ the set of nodes reachable from $s$ in $G_f$ and by $T$ the set of nodes from which $t$ is reachable in $G_f$.  Prove that $V=S\cup T$ if and only if $G$ has a \textbf{unique} $s$-$t$ minimum cut.
+\end{exercise}
+
+\bigskip \noindent \textbf{Solution} \bigskip
+
+\noindent \textit{Proof} $\Leftarrow$
+\begin{itemize}
+    \item Suppose $V \ne S \cup T$, there must exist vertices (at least one) which are not reachable from $s$ and can not reach any vertex in $T$.
+    \item Since all such vertices can not reach any vertex in $T$, we put them into $S$, and we got $S'$. Then $\forall{x \in S'}$, $x$ still can not reach any vertex in $T$. Therefore, $(S', T)$ is also a minimum cut of $G$, which is in contradiction with "$G$ has a \textbf{unique} $s$-$t$ minimum cut".
+    \item Hence we have $V = S \cup T$.
+\end{itemize}
+
+
+\bigskip
+
+\noindent \textit{Proof} $\Rightarrow$
+\begin{itemize}
+    \item When $V = S \cup T$, $(S, T)$ is obviously a minimum cut of $G$. Let the corresponding maximum flow be $f$.
+    \item Suppose there is another minimum cut $(S', T')$, and its corresponding maximum flow is $f'$.
+\end{itemize}
+
+}
+\end{document}
+
+

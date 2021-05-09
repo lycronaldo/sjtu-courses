@@ -125,11 +125,99 @@
 
 ## Circulation with Supplies and Demands
 
+这一节就要吐槽 PPT 做的不好了，总是从教材里面「断章取义」，截取一个片段，看得让人云里雾里的。
+
+下面用大白话来讲一下 Circulation Problem ：给定一个网络流图 $G=(V,E)$ 和它的源点集合 sources ，汇点集合 sinks，假设 sources 中节点均可以生产商品 (Supplies) ，sinks 中的节点需要得到某个数量的商品 (Demands) ，求出一个网络流方案（即一个流函数 $f$ ），从 sources 出发，到达并满足 sinks 的商品数量要求。
+
+形式化描述：
+
+> Assume that all capacities and demands are integers. Given flow network $G=(V,E)$ with capacities on edges. Now associated with each node $v \in V$ is a demand $d_v$.
+>
+> - If $d_v > 0$, this indicates that node $v$ has a demand $d_v$ for flow.
+>   - If this node is a sink, and it wishes to receive $d_v$ units more flow than it sends outs
+> - If $d_v < 0$, this indicates that node $v$ has a supply $-d_v$.
+>   - If this node is a source, and it wished to send out $-d_v$ units more flow than it receives.
+> - If $d_v = 0$, then the node neither a source nor a sink.
+>
+> We use $S$ to denote the set of all nodes with negative demand and $T$ to denote the set of all nodes with positive demand. 
+
+一般来说，$d_v > 0$ 的节点是 sinks 节点，$d_v < 0$ 的节点是 sources 节点。
+
+$\forall{v \in S}$，$v$ 虽然是提供流量的，但也允许流入流量，流入的流量需要从 $v \rightarrow x$ 这样的边流出去，在这样的情况下，从 $v$ 出去的流量是 $-d_v+\sum_{\text{into }v} f(v)$ 。对于 $T$ 中的节点也是同理。
+
+Circulation 的数学定义：
+
+> Given a digraph $G = (V,E)$ with edge capacities $c(e) \ge 0$ and node demands $d(v)$, a circulation is a function $f(e)$ that satisfies:
+>
+> - For each $e \in E$, $0 \le f(e) \le c(e)$ .
+>
+> - For each $v \in V$, 
+>
+>   $$
+>   \sum_{e \text{ into } v} f(e) - \sum_{e \text{ out of } v} f(e) = d(v)
+>   $$
+
+显然，这时候问题已经不是一个 Maximization Problem，而是一个 Feasibility Problem ，但仍然可以规约到最大流问题去解决。
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210509140029.png" style="width:70%;" />
+
+图 (a) 所示是一个 Circulation 问题的实例，方格中的数字代表一个解，边上的数值代表容量。
+
+如图 (b) 所示，将 Circulation 问题规约到最大流问题：
+
+- Add new source $s$ and sink $t$.
+- For each $v$ with $d(v) < 0$, add edge $(s, v)$ with capacity $−d(v)$.
+- For each $v$ with $d(v) > 0$, add edge $(v, t)$ with capacity $d(v)$.
+
+最后在转换得到的 $G'$ 中做一遍最大流，即可得到原问题的解。
+
+
+
+### Lower Bounds
+
+如果我们给每个边都限定一个最低流量 $l(e)$ ，即每条边至少需要流过 $l(e)$ 的流量，那么该怎么解决呢？
+
+> Given a digraph $G = (V,E, l, c, d)$ with edge capacities $c(e) \ge 0$ , lower bound $l(e) \ge 0$, and node demands $d(v)$, a circulation is a function $f(e)$ that satisfies:
+>
+> - For each $e \in E$, $l(e) \le f(e) \le c(e)$ .
+>
+> - For each $v \in V$, 
+>
+>   $$
+>   \sum_{e \text{ into } v} f(e) - \sum_{e \text{ out of } v} f(e) = d(v)
+>   $$
+>
+> **Circulation problem with lower bounds** - Given $G = (V,E,l,c,d)$, does there exist a feasible circulation?
+
+对于这样的情况，我们可以对每个边 $e = v \rightarrow w$ 做如下的转换：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210509141131.png" style="width:67%;" />
+
+
 
 
 
 
 ## Survey Design
+
+Consider a company that sells $k$ products and has a database containing the purchase histories of $n$ customers.
+
+- A customer can only be asked about products that he/she has purchased.
+- Each customer $i$ should be asked about a number of products between $c_i$ and $c_i'$.
+  - 每个顾客回答的问题数目在 $[c_i, c_i']$ 这个区间内，每个问题与不同的产品相关。
+- There must be between $p_j$ and $p_j'$ distinct customers asked about each product $j$.
+  - 在调查结果中，每个产品必须有 $k (k \in [p_j, p_j'])$ 个不同的客户回答过相关问题。 
+
+如果把产品和客户都看作是一个点，购买记录表示二者之间的一条边，那么可以得到一个二分图。如果 $c_i = c_i' = p_j = p_j' = 1$，那么问题就转换为求解**二分图的完美匹配**。
+
+下面把 Survey Design Problem 规约到最大流问题（如下图所示）。
+
+- $t \rightarrow s$ 这条边表示的是问题的总数。
+- 令所有点的 $d_v = 0$ 。
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210509143858.png" style="width:67%;" />
+
+那么问题就转换为 Circulation with Lower Bounds 。
 
 
 
@@ -143,3 +231,44 @@
 
 ## Project Selection
 
+这里 PPT 就写得很好，一页之内把要点都总结了。
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210509150144.png"  style="width:77%;" />
+
+- 给定一个图 $G=(V,E)$，其中 $V$ 是 Project 集合，每个项目均有一个 $p_v$ 代表这个 Project 的收益（可正可负）。
+- $E$ 代表 Project 的依赖关系，$e = v \rightarrow w$ 代表 $v$ 依赖于 $w$，要想选择 $v$ ，那么 $w$ 也必须被选择。
+- 求解一个闭包集合 (Closure) $A$，使得 $A$ 的所有项目的收益之和最大。
+  - $A$ 具有的性质：$\forall{i \in A}$ ，对于与 $i$ 关联的每个边 $(i, j) \in E$，均有 $j \in A$ 。
+
+把 Project 集合分为正收益和负收益 2 个子集，可规约到最小割问题解决。
+
+- Add source vertex $s$ and sink vertex $t$, and define $p_s = p_t = 0$ .
+- Assign a capacity of $\infin$ to each prerequisite edge.
+- Add edge $(s, v)$ with capacity $p_v$ if $p_v > 0$.
+- Add edge $(v, t)$ with capacity $-p_v$ if $p_v < 0$.
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210509151355.png" style="width:67%;" />
+
+令 $C = \sum_{i \in P \text{ and }p_i > 0} p_i$ ，可以发现上图的最大流最多为 $C$ ，因此可以通过最大流算法解决。
+
+最后是解的对应关系：
+
+> $(A, B)$ is min cut **iff** $A − {s}$ is an optimal set of projects.
+>
+> - Infinite capacity edges ensure $A − {s}$ is feasible.
+>
+> - Max revenue because:
+>   $$
+>   \begin{aligned}
+>   \text{cap}(A,B) &= \sum_{v \in B: p_v > 0} p_v + \sum_{v \in A: p_v < 0} (-p_v) \\
+>   &= \sum_{v:p_v>0} p_v - \sum_{v \in A} p_v
+>   \end{aligned}
+>   $$
+>
+> 😅 证明我也看不懂的，PPT 就放 2 个要点，还能看得懂个 🔨 噢。
+
+
+
+## References
+
+- [1] KT05 - Algorithm Design (Chapter 7)
