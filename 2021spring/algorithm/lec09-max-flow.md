@@ -142,6 +142,14 @@ Greedy Algorithm:
 
 如果只是学这个算法去做题的话，看到这里已经可以了。
 
+**割边一定满流，但满流的边不一定是割边。**
+
+> - https://www.cnblogs.com/zyfzyf/articles/4189341.html
+> - https://www.cnblogs.com/AbandonZHANG/p/4114269.html
+> - https://www.cnblogs.com/LLTYYC/p/10763685.html
+
+**下面这一段文字是错误的。**
+
 目前为止，我们已经解决了最大流问题，那么对应的最小割是什么呢？在原图 (a) 中，$\{(v_1, v_3), (v_4, v_3), (v_4, t)\}$ 是最小割，因为在最大流 (f) 中，这三个边的流量都是「满」的。即：在最大流中，$f(e) = c(e)$ 的边就是最小割的边。
 
 这一（最小）割集意味着 2 点：

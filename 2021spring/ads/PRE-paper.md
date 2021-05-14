@@ -67,6 +67,8 @@ GridGraph:
 
 ### 3.1 Programming Abstraction
 
+
+
 ### 3.2 Dual Sliding Windows
 
 ### 3.3 2-Level Hierarchical Partitioning
