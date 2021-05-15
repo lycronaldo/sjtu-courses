@@ -5,8 +5,6 @@
 
 
 
-
-
 ## Introduction
 
 线性规划 (Linear Programming) 就是高中数学讲的那个线性规划，不过现在是从计算机的角度来谈这个问题的。
@@ -58,6 +56,8 @@ LP 问题是 NP-Hard 的，单纯形法 (Simplex) 是一个解决 LP 问题的�
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210513152449.png" style="width:40%;" />
 
+
+
 ## Standard and slack forms
 
 对于一个 LP 问题的实例，我们都能把它转换为一个标准型 (Standard Form) ：
@@ -70,16 +70,149 @@ LP 问题是 NP-Hard 的，单纯形法 (Simplex) 是一个解决 LP 问题的�
 
 参考 CLRS：TODO。
 
+### Standard form
+
+标准型具有下列形式：
+$$
+\begin{aligned}
+& \text{ maximize } & \sum_{j=1}^{n} c_jx_j \\
+& \text{ subject to } &  \\
+& & \sum_{j=1}^{n}a_{ij}x_j \le b_i \text{,  for } i=1,2, \dots, m \\
+& & x_j \ge 0 \text{,  for } i=1,2, \dots, m
+\end{aligned}
+$$
+如果写成矩阵形式：
+$$
+\begin{aligned}
+& \text{ maximize } & \textbf{c}^T \textbf{x} \\
+& \text{ subject to } & \\
+& & \textbf{Ax} \le \textbf{b} \\
+& & \textbf{x} \ge 0
+\end{aligned}
+$$
+其中，$\textbf{c}^T$ 是一个行向量（即 $\textbf{c}$ 是一个列向量），$\textbf{b}$ 和 $\textbf{x}$ 均为列向量，$\textbf{A}$ 是一个矩阵。
+
+下面看如何任意一个 LP 问题转换为标准型。非标准型可能存在下列情况：
+
+- 目标函数 $z$ 可能为 $\text{minimize } z$ 类型。
+- 可能存在 $=, \ge$ 这样的约束条件。
+- 可能存在某些变量 $x_i$ ，缺少了 $x_i \ge 0$ 这样的非负约束条件。
+
+对于前面 2 种情况，处理方法是显而易见的：
+
+- 把目标函数转换为 $\text{maximize } -z$ .
+- $f(x) = k$ 转换为 $k \le f(x) \le k$ 的形式 。
+- $f(x) \ge k$ 转换为 $-f(x) \le -k$ 的形式。
+
+对于最后一种情况，对于缺少非负约束的 $x_i$ ：
+
+- 令 $x_i = x_{i_{1}} - x_{i_2}$ ，并替换所有的 $x_i$ .
+- 添加 2 个额外的约束：$x_{i_1}, x_{i_2} \ge 0$ .
+
+其实这相当于坐标系的变换，以二维空间为例，令 $x = x - k$ 相当于把可行域往右移动了 $k(k\ge0)$ 个单位，对 $y$ 坐标做同样的操作，相当于把可行域向上移动，最终可使得可行域都位于第一象限，即所有变量都具有非负约束。
+
+一个简单的例子：
+
+|                            Primal                            |                           Standard                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20210515151325.png) | ![](https://gitee.com/sinkinben/pic-go/raw/master/img/20210515151403.png) |
 
 
-## Duality
+
+### Slack form
+
+对于一个标准型的 LP ：
+$$
+\begin{aligned}
+& \text{ maximize } & \sum_{j=1}^{n} c_jx_j \\
+& \text{ subject to } &  \\
+& & \sum_{j=1}^{n}a_{ij}x_j \le b_i \text{,  for } i=1,2, \dots, m \\
+& & x_j \ge 0 \text{,  for } i=1,2, \dots, m
+\end{aligned}
+$$
+令：
+$$
+\begin{aligned}
+& s = b_i - \sum_{j=1}^{n} a_{ij}x_j \\
+& s \ge 0 
+\end{aligned}
+$$
+
+
+即转换为：
+$$
+\begin{aligned}
+& \text{ maximize } & z = v + \sum_{j=1}^{n} c_jx_j \\
+& \text{ subject to } &  \\
+& & x_i = b_i - \sum_{j=1}^{n}a_{ij}x_j, \text{ for } i=n+1,\dots, n+m \\
+& & x_i, x_j \ge 0, \text{  for any } i \text{ or } j
+\end{aligned}
+$$
+一个简单的例子：
+
+|                           Standard                           |                            Slack                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210515151403.png" /> | <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210515152538.png" style="" /> |
+
+其中，在等号左边的变量称为 ***basic varibales*** 或者是 ***slack variables***  , 等号右边的变量称为  ***nonbasic variables*** .
+
+
+
+## Dual
 
 参考 DPV：TODO。
 
+对于一个标准型的 LP 问题实例：
+$$
+\begin{aligned}
+& \text{ maximize } & \textbf{c}^T \textbf{x} \\
+& \text{ subject to } & \\
+& & \textbf{Ax} \le \textbf{b} \\
+& & \textbf{x} \ge 0
+\end{aligned}
+$$
+其对偶问题为：
+$$
+\begin{aligned}
+& \text{ minimize } & \textbf{b}^T \textbf{y} \\
+& \text{ subject to } & \\
+& & \textbf{A}^T \textbf{y} \ge \textbf{c} \\
+& & \textbf{y} \ge 0
+\end{aligned}
+$$
+前者常在教材中称为 Primal LP，后者称为 Dual LP 。
 
+一个简单的例子：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210515152824.png" style="width:70%;" />
+
+在该例子当中：
+$$
+\begin{aligned}
+\textbf{x} &= [x_1, x_2]^T \\
+\textbf{c} &= [1, 6]^T  \\
+\textbf{b} &= [200, 300, 400]^T \\
+\textbf{A} &=
+\begin{bmatrix}
+1 & 0 \\
+0 & 1 \\
+1 & 1 \\
+\end{bmatrix}
+\end{aligned}
+$$
+而在 Dual LP 当中：$\textbf{y} = [y_1, y_2, y_3] ^ T$ .
+
+下面来证明关于 Dual 的 3 个性质：
+
+- Complementary Slackness Property（重点要写这一节）
+- Weak Duality
+- Strong Duality
+
+对偶理论的性质可以直接扫一眼百度百科的结论。
 
 ## References
 
 - [1] DPV - Algorithm
-- [2] CLRS - Introduction to Algorithm
+- [2] CLRS - Introduction to Algorithm (Chapter 29)
+- [3] [Wikipedia - Linear Programming](https://en.wikipedia.org/wiki/Linear_programming)
 
