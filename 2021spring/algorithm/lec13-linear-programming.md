@@ -68,7 +68,7 @@ LP 问题是 NP-Hard 的，单纯形法 (Simplex) 是一个解决 LP 问题的�
 
 然后对于任意的标准型 LP 问题，我们都能转换为 Slack Form 来解决，没找到中文翻译，暂且称之为「松弛型」。
 
-参考 CLRS：TODO。
+
 
 ### Standard form
 
@@ -160,8 +160,6 @@ $$
 
 ## Dual
 
-参考 DPV：TODO。
-
 对于一个标准型的 LP 问题实例：
 $$
 \begin{aligned}
@@ -202,17 +200,54 @@ $$
 $$
 而在 Dual LP 当中：$\textbf{y} = [y_1, y_2, y_3] ^ T$ .
 
-下面来证明关于 Dual 的 3 个性质：
+下面来证明关于 Dual Problem 的 3 个性质：
 
-- Complementary Slackness Property（重点要写这一节）
 - Weak Duality
 - Strong Duality
+- Complementary Slackness
 
-对偶理论的性质可以直接扫一眼百度百科的结论。
+
+
+### Weak Duality
+
+我们知道最大流-最小割也是对偶问题，它们的 Weak Duality 是这样的：
+
+> Let $f$ be any flow and $(A, B)$ be any cut. Then $val(f) \le cap(A, B)$ .
+
+在 LP 问题中，同样具有这一性质：
+
+> 设 $\textbf{x}, \textbf{y}$ 分别是标准型 Primal LP 和 Dual LP 的一个可行解，那么有 $\textbf{c}^T \textbf{x} \le \textbf{b}^T \textbf{y}$ .
+>
+> 证明：
+>
+> - 由于 $\textbf{A}^T \textbf{y} \ge \textbf{c}$ ，那么 $\textbf{x}^T \textbf{A}^T \textbf{y} \ge \textbf{x}^T \textbf{c} = \textbf{c}^T \textbf{x}$ （三者都是 $1 \times 1$ 的矩阵）。
+>
+> - 同理，$\textbf{A} \textbf{x} \le \textbf{b}$ ，那么 $\textbf{y}^T \textbf{A} \textbf{x} \le \textbf{y}^T \textbf{b} = \textbf{b}^T \textbf{y} $ 。那么就有：
+>   $$
+>   \textbf{c}^T \textbf{x} = \textbf{x}^T \textbf{c} \le \textbf{x}^T \textbf{A}^T \textbf{y} = \textbf{y}^T \textbf{A} \textbf{x} \le \textbf{y}^T \textbf{b} = \textbf{b}^T \textbf{y}
+>   $$
+
+
+
+### Strong Duality
+
+LP 问题的强对偶性如下：
+
+> 如果 Primal LP 存在最优解 $\textbf{x}_0$ ，那么 Dual LP 也必然存在最优解 $\textbf{y}_0$ ，且目标函数值 $\textbf{c}^T \textbf{x}_0 = \textbf{b}^T \textbf{y}_0$ ，反之亦然。
+>
+> 证明略。
+
+
+
+### Complementary Slackness
+
+TODO.
+
+
 
 ## References
 
 - [1] DPV - Algorithm
-- [2] CLRS - Introduction to Algorithm (Chapter 29)
+- **[2] CLRS - Introduction to Algorithm (Chapter 29)**
 - [3] [Wikipedia - Linear Programming](https://en.wikipedia.org/wiki/Linear_programming)
 

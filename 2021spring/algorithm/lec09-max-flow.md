@@ -142,20 +142,22 @@ Greedy Algorithm:
 
 如果只是学这个算法去做题的话，看到这里已经可以了。
 
-**割边一定满流，但满流的边不一定是割边。**
+目前为止，我们已经解决了最大流问题，那么对应的最小割是什么呢？可以通过下面的步骤找到最小割：
 
-> - https://www.cnblogs.com/zyfzyf/articles/4189341.html
-> - https://www.cnblogs.com/AbandonZHANG/p/4114269.html
-> - https://www.cnblogs.com/LLTYYC/p/10763685.html
+- 在 $G_f$ 中，本例中为图 (f) ，从 $s$ 出发做一次 DFS/BFS，记录能到达的所有点为 $A$ ，那么 $(A, V-A)$ 是一对最小割。
+- 在原图 $G$ 中，本例中为图 (a)，任何 $A \rightarrow V-A$ 的边都是割边。
 
-**下面这一段文字是错误的。**
+即本例的最小割集为 $\{(v_1, v_3), (v_4, v_3), (v_4, t)\}$ ，最小割意味着：
 
-目前为止，我们已经解决了最大流问题，那么对应的最小割是什么呢？在原图 (a) 中，$\{(v_1, v_3), (v_4, v_3), (v_4, t)\}$ 是最小割，因为在最大流 (f) 中，这三个边的流量都是「满」的。即：在最大流中，$f(e) = c(e)$ 的边就是最小割的边。
+- 去除这些边后，使得 $s$ 和 $t$ 不再连通。
+- 把图分为 $B=\{v_3,t\}$ 和 $A=\{s, v_1, v_2, v_4\}$ 两部分。
 
-这一（最小）割集意味着 2 点：
+但应当注意的是：
 
-- 它使得 $s$ 和 $t$ 不再连通 。
-- 把图分为 $B=\{v_3,t\}$ 和 $A=\{s, v_1, v_2, v_4\}$ 两部分。从图中删除这一割集后，$s$ 能到达 $A$ 中的任意一点，$B$ 中的任意一点都能到达 $t$ 。
+- **割边一定满流，但满流的边不一定是割边。**
+- 对于某一最大流 $f$ ，可能存在多个最小割（唯一最小割的条件参考 Assignment-3 ）。
+
+
 
 
 
@@ -210,7 +212,7 @@ $$
   - Let $A$ be set of nodes reachable from $s$ in residual network $G_f$ . And $B$ is the set containing the left nodes (and every node in $B$ can reach $t$ ).
   - By definition of $A$ : $s \in A$ .
   - By definition of flow $f$ : $t \notin A$ .
-  - 如图所示，$G_f$ 中没有 Augmenting Path，当且仅当，在**原图** $G$ 中：
+  - 如下图所示，$G_f$ 中没有 Augmenting Path，当且仅当，在**原图** $G$ 中：
     - 所有 $A \rightarrow B$ 的边，$f(e) = c(e)$ 
     - 所有 $B \rightarrow A$ 的边，$f(e) = 0$
     - 为什么呢？如果 $G$ 存在 $A \rightarrow B$ 的边 $e$ ，$f(e) < c(e)$，那么在 $G_f$ 中会存在 $A \rightarrow B$ 的边，权值为 $c(e) - f(e)$，使得 $G_f$ 存在 Augmenting Path 。同理， $G$ 所有 $B \rightarrow A$ 的边 $f(e) = 0$，意味着它在 $G_f$ 中 对应的 $e^{\text{reverse}}$ （从 A 到 B 到边）的权值均为 0 ，同样保证了 A 不能到达 B （即 $G_f$ 没有 Augmenting Path）。
@@ -265,7 +267,7 @@ $$
 ## References
 
 - [1] https://www.cs.princeton.edu/courses/archive/spr04/cos226/lectures/maxflow.4up.pdf
-- [2] KT05 - Algorithm Design (Chapter 7)
+- **[2] KT05 - Algorithm Design (Chapter 7)**
 - [3] CLRS - Introduction to Algorithm
 - [4] https://oi-wiki.org/graph/flow/max-flow/
 
