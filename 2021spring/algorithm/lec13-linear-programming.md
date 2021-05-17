@@ -46,7 +46,7 @@ LP 问题是 NP-Hard 的，单纯形法 (Simplex) 是一个解决 LP 问题的�
 
 > In this way it does **hill-climbing** on the vertices of the polygon, walking from neighbor to neighbor so as to steadily increase profit along the way. 
 >
-> By simple geometry — think of the profit line passing through this vertex. Since all the vertex’s neighbors lie below the line, the rest of the feasible polygon must also lie below this line.
+> By simple geometry - think of the profit line passing through this vertex. Since all the vertex’s neighbors lie below the line, the rest of the feasible polygon must also lie below this line.
 
 如果存在 3 个变量，即：
 
@@ -90,7 +90,7 @@ $$
 & & \textbf{x} \ge 0
 \end{aligned}
 $$
-其中，$\textbf{c}^T$ 是一个行向量（即 $\textbf{c}$ 是一个列向量），$\textbf{b}$ 和 $\textbf{x}$ 均为列向量，$\textbf{A}$ 是一个矩阵。
+其中，$\textbf{c}^T$ 是一个行向量（即 $\textbf{c}$ 是一个列向量），$\textbf{b}$ 和 $\textbf{x}$ 均为列向量，$\textbf{A}$ 是一个矩阵，并且有 $|\textbf{A}| = m \times n$。
 
 下面看如何任意一个 LP 问题转换为标准型。非标准型可能存在下列情况：
 
@@ -235,13 +235,52 @@ LP 问题的强对偶性如下：
 
 > 如果 Primal LP 存在最优解 $\textbf{x}_0$ ，那么 Dual LP 也必然存在最优解 $\textbf{y}_0$ ，且目标函数值 $\textbf{c}^T \textbf{x}_0 = \textbf{b}^T \textbf{y}_0$ ，反之亦然。
 >
-> 证明略。
+> 通过证明 Complementary Slackness 可得。
 
 
 
 ### Complementary Slackness
 
-TODO.
+Complementary Slackness 描述的是：
+
+- Primal LP 的变量与 Dual LP 的约束之间的关系。
+- Dual LP 的变量与 Primal LP 的约束之间的关系。
+
+Complementary Slackness 的数学描述，个人觉得是 Refs [4] 的描述是最好理解的（这里不建议看 Wikipedia ），而证明过程最简洁的是 Refs [5] 。
+
+> **Theorem** *(Complementary Slackness)* 
+>
+> Let $\textbf{x}$ be a feasible solution to the primal LP and $\textbf{y}$ be a feasible solution to the dual LP. Then $\textbf{x}$ is optimal to the primal and $\textbf{y}$ is optimal to the dual **if and only if** the conditions of *Complementary Slackness* hold:
+> $$
+> (b_i - \sum_{j=1}^{n}a_{ij}x_j)y_i = x_{n+i}y_i = 0 \text{ for } i=1,2, \dots, m
+> $$
+> and
+> $$
+> (\sum_{i=1}^{m}a_{ji}y_i - c_j)x_j = y_{m+j}x_j = 0 \text{ for } j=1,2, \dots, n .
+> $$
+> **Proof**
+>
+> - $\textbf{x}$ and $\textbf{y}$ are both optimal for their respective LPs
+>   $\iff$ (by weak duality)
+> - $\textbf{c}^T \textbf{x} = \textbf{b}^T \textbf{y}$ 
+>   $\iff$ (since $\textbf{b}^T \textbf{y}$ is $1 \times 1$, and recall $\textbf{c}^T \textbf{x} \le \textbf{y}^T \textbf{Ax} \le \textbf{y}^T \textbf{b}$)
+> - $\textbf{c}^T \textbf{x} = \textbf{y}^T \textbf{Ax}$ and $\textbf{y}^T \textbf{Ax} = \textbf{y}^T \textbf{b}$ 
+>   $\iff$ (Algebra)
+> - $(\textbf{A}^T \textbf{y} - \textbf{c})^T \textbf{x} = 0$ and $\textbf{y}^T (\textbf{Ax} - \textbf{b}) = 0$ .
+>   $\iff$
+> - The complementary slackness conditions hold.
+
+从 LP 问题的 Slack 形式来看待这个性质：
+
+- 如果 Primal 的第 i 个 Slack Variable 不为 0 ( i.e. $x_{n+i} > 0$ ) ，那么 Dual 的第 i 个 Non-basic Variable 等于 0 ( i.e. $y_i = 0$ ) .
+- 如果 Dual 的第 j 个 Slack Variable 不为 0 ( i.e. $y_{m+j} > 0$ ) ，那么 Primal 的第 j 个 Non-basic Variable 等于 0 ( i.e. $x_j = 0$ ) .
+
+如果把 Primal 的变量 $x_i$ 看作是一个资源 (Resource) 的数量，那么 Dual 的变量 $y_j$ 就是资源的价值 (Value)，Complementary Slackness 揭示了一个十分简单的经济学原理：
+
+- $x_{n+i} > 0$ 表示资源数量存在冗余，那么有 $y_i = 0$ 表示资源的冗余部分是没有价值的。
+- $y_{m+j} > 0$ 表示资源仍然具有价值（价格不为 0 ），那么有 $x_j = 0$ 表示该资源供应短缺。
+
+
 
 
 
@@ -250,4 +289,6 @@ TODO.
 - [1] DPV - Algorithm
 - **[2] CLRS - Introduction to Algorithm (Chapter 29)**
 - [3] [Wikipedia - Linear Programming](https://en.wikipedia.org/wiki/Linear_programming)
+- [4] https://www.math.ubc.ca/~anstee/math340/340complementaryslackness.pdf
+- [5] https://www.matem.unam.mx/~omar/math340/comp-slack.html
 
