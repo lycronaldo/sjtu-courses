@@ -100,7 +100,7 @@ Optimization Problem 即中文里面的「优化问题」或者「最优化问�
 
 参考 Wikipedia 的 [Optimization Problem](https://en.wikipedia.org/wiki/Optimization_problem) 词条。
 
-优化问题的定义：
+最优化问题的定义：
 
 > An optimization problem is the problem of finding the best solution from all feasible solutions.
 
