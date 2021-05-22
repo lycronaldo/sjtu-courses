@@ -52,9 +52,50 @@ $$
 
 
 
-## Max-flow
+## Maximum flow
+
+给定源点 $s$ 和汇点 $t$，对于图 $G = (V, E)$ 的一个流函数 $f$，其流量值为从 $s$ 出去的量减去流入 $s$ 的量（大部分情况是 0 ），即： $ val(f) = \sum_{v \in V} f_{sv} - \sum_{v \in V} f_{vs}$ 。
+
+那么其线性规划形式为：
+$$
+\begin{aligned}
+& \text{ maximize }  &\sum_{v \in V} f_{sv} - \sum_{v \in V} f_{vs} \\
+& \text{ subject to } & f_{uv} \le c(u, v)  & \text{ for each } u, v \in V \\
+& & \sum_{v \in V} f_{vu} = \sum_{v \in V} f_{uv}  & \text { for each } u \in V - \{s,t\} \\
+& & f_{uv} \ge 0 & \text{ for each } u, v \in V
+\end{aligned}
+$$
+该 LP 问题：
+
+- 最多具有 $V^2$ 个变量（意味着 $G$ 为完全图，如果不是，那么增添容量为 0 的边，转换为等价的完全图）；
+- 最多具有 $2V^2+V-2$ 个约束条件。
+
+一个例子：
+
+|                           Example                            |                              LP                              |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210521125355.png" style="" /> | <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210521125427.png"  /> |
 
 
+
+注意到上述 LP 的第二个约束条件，我们必须排除 $s,t$ 这 2 个特殊点。
+
+如果我们添加一个虚拟边 $t \rightarrow s$ ，那么可以有：
+$$
+\begin{aligned}
+& \text{ maximize } & f_{ts} \\
+& \text{ subject to } & f_{ij} \le c_{ij}, &\text{ for } (i,j) \in E \\
+& & \sum_{(w,i) \in E}f_{wi} - \sum_{(i,z) \in E} f_{iz} \le 0, &\text{ for } i \in E \\
+& & f_{ij} \ge 0, & \text{ for } (i,j) \in E
+\end{aligned}
+$$
+
+
+## Min-Max Relations and Duality
+
+本节介绍 LP 的对偶问题，及其二者之间的关系。
+
+- Vertex Cover
 
 
 
