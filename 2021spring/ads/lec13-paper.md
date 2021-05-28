@@ -16,7 +16,7 @@
 
 **Synopsis**
 
-This paper describes Tiled-MapReduce (TMR), a progamming model extended from MapReduce. TMR works on a single multi-core machine, and it iteratively process small-chunks of data in turn rather than a large chunk (which shows better performance) .
+This paper describes Tiled-MapReduce (TMR), a progamming model extended from MapReduce. TMR works on a single multi-core machine, and it iteratively processes small-chunks of data in turn rather than a large chunk (which shows better performance) .
 
 And the paper implemented a prototype of TMR based on Phoenix, called "Ostrich". Over Intel machine with 16 cores, the experiements on Ostrich shows that it is 1.2X - 3.3X faster than MapReduce.
 
