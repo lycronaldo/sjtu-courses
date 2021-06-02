@@ -96,7 +96,7 @@ Greedy Algorithm:
 
 **Augmenting Path**
 
-不少地方把 Augmenting Path 翻译为「增广路径」，注意与二分图中的增广路径区分。
+不少地方把 Augmenting Path 翻译为「增广路径」，匈牙利算法里面的增广路径也是从这里引申而来的。
 
 残留网络 $G_f$ 具有下列性质：
 
