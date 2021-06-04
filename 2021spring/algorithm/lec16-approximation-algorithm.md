@@ -38,7 +38,7 @@
 
 
 
-### Maximal Matching
+### Greedy
 
 对于 Cardinality Vertex Cover ，一个近似算法为：
 
@@ -251,6 +251,8 @@ Thereom - The greedy algorithm is an $H_n$ factor approximation algorithm for th
 对于这一贪心算法，一个 Tight Example 如下：
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210602193438.png" style="width:70%;" />
+
+当然 SC 问题也是可以通过 Layering 来近似的，SC-Layering 的近似因子为 $f$ ，但我找了好久，都没找到这个 SC-Layering 长什么样（虽然这是 Ex-5.1）。
 
 ## References
 
