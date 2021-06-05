@@ -187,3 +187,4 @@ $V'$ 表示 MST 中的奇度顶点，显然 $|V'|$ 必然是个偶数，因为 $
 ## References
 
 - [1] Vaz - Approximation Algorithms (Chapter 3)
+

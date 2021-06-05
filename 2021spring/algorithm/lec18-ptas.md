@@ -20,6 +20,13 @@
 
 个人对这个 FPTAS 的理解。一个算法的近似解的界，它依赖于 $\mathcal{E}$ ，同时这个算法的复杂度也跟 $1 / \mathcal{E}$ 有关，比如 $O(n/\mathcal{E})$ 。这意味着什么呢？以 $f(I,s) \le (1 + \mathcal{E}) \cdot OPT$ 为例子，如果我们对近似算法的要求放宽，允许它有更高的上界，即 $\mathcal{E}$ 增大，那么这个近似算法的复杂度会以 $1 / \mathcal{E}$ 的形式降低。
 
+一个近似算法是 FPTAS，当且仅当：
+
+- 该算法是 PTAS 的，即：近似算法输出的解 $f$ 满足 $f \le (1 + \varepsilon) \cdot OPT$ 或者 $f \ge (1 - \varepsilon) \cdot OPT$ .
+- 该算法的时间复杂度是一个关于 $n$ 和 $1/\varepsilon$ 的多项式（并且需要同时出现，只有 $n$ 的多项式也是不行的）。
+
+
+
 ## Knapsack
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210603154949.png" style="width:67%;" />
