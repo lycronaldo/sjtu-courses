@@ -94,6 +94,10 @@ Lemma - Let $w: V \rightarrow \textbf{Q}^+ $ be a degree-weight function. Then $
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210602194904.png"  style="width:67%;" />
 
+另一种表述为（来自 Refs[1] ，这种写法可以很容易改写为 SC 的 Layering 算法）：
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210607153114.png" style="width:67%;" />
+
 一个例子（顶点的数字表示权重）：
 
 |                              1                               |                              2                               |                              3                               |                              4                               |
@@ -252,7 +256,23 @@ Thereom - The greedy algorithm is an $H_n$ factor approximation algorithm for th
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210602193438.png" style="width:70%;" />
 
-当然 SC 问题也是可以通过 Layering 来近似的，SC-Layering 的近似因子为 $f$ ，但我找了好久，都没找到这个 SC-Layering 长什么样（虽然这是 Ex-5.1）。
+
+
+### Layering
+
+当然 SC 问题也是可以通过 Layering 来近似的，SC-Layering 的近似因子为 $f$ ，但我找了好久，最后在 Refs[1] 找到了 SC-Layering （这是 Ex-5.1）。
+
+初始的 $S_0$ 应该是 $S_0 = \mathcal{S}$ .
+
+<img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210607151624.png" style="width:67%;" />
+
+
+
+
+
+
+
+
 
 ## References
 
