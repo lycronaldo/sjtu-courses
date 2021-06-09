@@ -5,7 +5,7 @@ Refs:
 
 **Notes** - 我不知道 "reduce / reduction" 的中文翻译是「规约」还是「归约」，但行文如果一直用 "reduce" 这个词，文风就很奇怪，所以这里使用「规约」一词作为中文翻译，因为我的苹果输入法已经记住这个词了。
 
-在前面的 Lecture 中提到，SAT 已被证明为是一个 NPC 问题，这就意味着：任何一个 NP 问题都能规约为 SAT 问题。但解决 SAT 问题依旧是十分困难的，因此有必要对 SAT 进一步规约。
+在前面的 Lecture 中提到，SAT 已被证明为是一个 NPC 问题，这就意味着：任何一个 NP 问题都能规约为 SAT 问题。
 
 <img src="https://gitee.com/sinkinben/pic-go/raw/master/img/20210416192117.png" style="width:70%;" />
 

@@ -51,7 +51,7 @@ P 是指 Polynomial 这个单词，NP 当然**不是** Non-polynomial（NP 其�
 
 > A complexity class contains a set of problems that take a similar range of space and time to solve.
 
-回顾上一节 (lec05) ，提到判定问题 (Decision Problem) ：可以在**多项式**时间内回到 YES 或者 NO 的问题。
+回顾上一节 (lec05) ，提到判定问题 (Decision Problem) ：可以在**多项式**时间内回答 YES 或者 NO 的问题。
 
 那么可以给出上述 4 类问题的自然语言描述：
 
